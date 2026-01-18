@@ -2,88 +2,269 @@
 <html lang="am">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ወንጌል ለእኔ - Bisrat Gospel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ወንጌል ለእኔ - Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@200;400;600;800&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        body { -webkit-tap-highlight-color: transparent; font-family: 'Noto Sans Ethiopic', sans-serif; background-attachment: fixed; }
-        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); }
-        .nav-active { color: #4f46e5; }
-        .tab-content.hidden { display: none; }
+        body { 
+            font-family: 'Poppins', 'Noto Sans Ethiopic', sans-serif; 
+            background-color: #f8fafc;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Modern Glassmorphism */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:active { transform: scale(0.98); }
+
+        /* Animated Background Blobs */
+        .blob {
+            position: fixed;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 300px; height: 300px; background: #c4b5fd; animation-delay: 0s; }
+        .blob-2 { bottom: 10%; right: -10%; width: 250px; height: 250px; background: #a5b4fc; animation-delay: 2s; }
+        .blob-3 { top: 40%; left: 40%; width: 200px; height: 200px; background: #fcd34d; opacity: 0.3; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(20px, 30px); }
+        }
+
+        /* Animations */
+        .fade-in-up { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; transform: translateY(20px); }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .nav-active { color: #4f46e5; position: relative; }
+        .nav-active::after {
+            content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+            width: 4px; height: 4px; background: #4f46e5; border-radius: 50%;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
-<body class="bg-[#f3f4f6] text-gray-800 min-h-screen flex flex-col pb-32">
+<body class="text-slate-800 min-h-screen flex flex-col pb-36 relative overflow-x-hidden">
 
-    <header class="px-6 pt-10 pb-4 flex justify-between items-center bg-[#f3f4f6]/80 sticky top-0 z-30 backdrop-blur-md">
-        <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6]">ወንጌል ለእኔ</h1>
+    <div class="blob blob-1 rounded-full"></div>
+    <div class="blob blob-2 rounded-full"></div>
+    <div class="blob blob-3 rounded-full"></div>
+
+    <header class="px-6 pt-12 pb-6 flex justify-between items-center sticky top-0 z-40">
+        <div class="glass-panel px-4 py-2 rounded-full flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-600 to-purple-500 flex items-center justify-center text-white text-xs font-bold shadow-lg">
+                <i class="fas fa-cross"></i>
+            </div>
+            <h1 class="text-xl font-black tracking-tight text-slate-800">ወንጌል<span class="text-indigo-600">ለእኔ</span></h1>
+        </div>
+        <button class="w-10 h-10 rounded-full glass-panel flex items-center justify-center text-slate-500 shadow-sm active:scale-90 transition">
+            <i class="fas fa-bell"></i>
+        </button>
     </header>
 
-    <main class="flex-1 px-6 z-10">
+    <main class="flex-1 px-5 z-10 w-full max-w-lg mx-auto">
+        
         <div id="home" class="tab-content space-y-6">
-            <div class="glass p-6 rounded-[2rem] border-l-4 border-l-indigo-500 shadow-sm">
-                <h3 class="font-bold text-gray-400 text-[10px] uppercase mb-1 tracking-widest">የዕለቱ ቃል</h3>
-                <p id="verseText" class="text-gray-800 text-lg font-medium italic leading-relaxed">ጥቅሱ በመጫን ላይ...</p>
-                <span id="verseRef" class="text-xs font-bold text-indigo-600 mt-2 block"></span>
+            <div class="fade-in-up">
+                <p class="text-slate-500 text-sm font-medium ml-1">እንኳን ደህና መጡ 👋</p>
+                <h2 class="text-2xl font-bold text-slate-800 ml-1">የዛሬው የመንፈስ ምግብ</h2>
             </div>
 
-            <div class="grid grid-cols-2 gap-5">
-                <div onclick="showTab('register')" class="glass p-6 rounded-[2rem] flex flex-col items-center gap-3 active:scale-95 cursor-pointer">
-                    <div class="w-14 h-14 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center text-xl shadow-inner"><i class="fas fa-user-plus"></i></div>
-                    <span class="font-bold text-gray-700 text-sm">ምዝገባ</span>
+            <div class="glass-panel p-8 rounded-[2.5rem] relative overflow-hidden fade-in-up delay-100 group">
+                <div class="absolute -right-6 -top-6 text-[150px] text-indigo-100/50 rotate-12 z-0 font-serif">"</div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-2 mb-4">
+                        <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">የዕለቱ ቃል</span>
+                        <div class="h-[1px] flex-1 bg-gradient-to-r from-orange-100 to-transparent"></div>
+                    </div>
+                    <p id="verseText" class="text-xl text-slate-700 font-medium leading-relaxed font-serif">ጥቅሱ በመጫን ላይ...</p>
+                    <div class="mt-6 flex items-center justify-between">
+                        <span id="verseRef" class="text-sm font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg">...</span>
+                        <button onclick="shareVerse()" class="text-slate-400 hover:text-indigo-600 transition"><i class="fas fa-share-alt"></i></button>
+                    </div>
                 </div>
-                <div onclick="showTab('training')" class="glass p-6 rounded-[2rem] flex flex-col items-center gap-3 active:scale-95 cursor-pointer">
-                    <div class="w-14 h-14 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center text-xl shadow-inner"><i class="fas fa-play"></i></div>
-                    <span class="font-bold text-gray-700 text-sm">ስልጠና</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 fade-in-up delay-200">
+                <div onclick="showTab('register')" class="glass-card p-5 rounded-[2rem] flex flex-col justify-between h-40 cursor-pointer group">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-600 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">ምዝገባ</h4>
+                        <p class="text-[10px] text-slate-400 mt-1">አገልግሎት ለመጀመር እዚህ ይመዝገቡ</p>
+                    </div>
+                </div>
+                
+                <div onclick="showTab('training')" class="glass-card p-5 rounded-[2rem] flex flex-col justify-between h-40 cursor-pointer group">
+                    <div class="w-12 h-12 rounded-2xl bg-slate-800 text-white flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800">ስልጠና</h4>
+                        <p class="text-[10px] text-slate-400 mt-1">መንፈሳዊ ትምህርቶችን ይከታተሉ</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="training" class="tab-content hidden space-y-5">
-            <h2 class="text-xl font-bold text-gray-800">ትምህርቶች</h2>
-            <div id="lessonsList" class="space-y-4"></div>
+        <div id="training" class="tab-content hidden space-y-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-slate-800">የትምህርት ክፍል</h2>
+                <span class="text-xs bg-green-100 text-green-600 font-bold px-2 py-1 rounded-md">Live</span>
+            </div>
+            
+            <div class="space-y-4" id="lessonsList">
+                <div class="glass-card p-4 rounded-[1.5rem] flex gap-4 items-center">
+                    <div class="w-16 h-16 rounded-2xl bg-gray-200 bg-cover bg-center shadow-inner" style="background-image: url('https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&q=80&w=200');"></div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-sm text-slate-800">የጸሎት ኃይል - ክፍል 1</h4>
+                        <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">ጸሎት ከእግዚአብሔር ጋር የምናደርገው...</p>
+                        <div class="mt-2 h-1 w-full bg-gray-100 rounded-full overflow-hidden"><div class="h-full w-2/3 bg-indigo-500"></div></div>
+                    </div>
+                    <button class="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center text-xs"><i class="fas fa-play"></i></button>
+                </div>
+
+                <div class="glass-card p-4 rounded-[1.5rem] flex gap-4 items-center">
+                    <div class="w-16 h-16 rounded-2xl bg-gray-200 bg-cover bg-center shadow-inner" style="background-image: url('https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&q=80&w=200');"></div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-sm text-slate-800">የወንጌል ስርጭት ዘዴዎች</h4>
+                        <p class="text-[10px] text-slate-500 mt-1 line-clamp-1">እንዴት ወንጌልን በዘመናዊ መንገድ...</p>
+                        <div class="mt-2 h-1 w-full bg-gray-100 rounded-full overflow-hidden"><div class="h-full w-1/4 bg-indigo-500"></div></div>
+                    </div>
+                    <button class="w-8 h-8 rounded-full border border-slate-200 text-slate-800 flex items-center justify-center text-xs"><i class="fas fa-lock"></i></button>
+                </div>
+            </div>
         </div>
 
         <div id="register" class="tab-content hidden">
-            <div class="glass p-8 rounded-[2.5rem] shadow-xl">
-                <h2 class="text-2xl font-black text-center mb-8">ምዝገባ</h2>
-                <form id="regForm" class="space-y-5">
-                    <input id="fullName" type="text" placeholder="ሙሉ ስም" class="w-full p-4 rounded-2xl bg-gray-50 border-none outline-none shadow-inner">
-                    <input id="phone" type="tel" placeholder="ስልክ ቁጥር" class="w-full p-4 rounded-2xl bg-gray-50 border-none outline-none shadow-inner">
-                    <select id="role" class="w-full p-4 rounded-2xl bg-gray-50 border-none outline-none shadow-inner">
-                        <option value="">ዘርፍ ይምረጡ</option>
-                        <option>ወንጌላዊ</option>
-                        <option>አስተባባሪ</option>
-                        <option>የጸሎት ቡድን</option>
-                    </select>
-                    <button type="button" onclick="submitRegistration()" class="w-full bg-[#4f46e5] text-white py-4 rounded-2xl font-bold shadow-lg active:scale-95">ይመዝገቡ</button>
+            <div class="glass-panel p-8 rounded-[2.5rem] relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
+                <h2 class="text-2xl font-black text-center mb-2">ምዝገባ</h2>
+                <p class="text-center text-xs text-slate-400 mb-8">የእግዚአብሔርን መንግሥት አብረን እንስራ</p>
+
+                <form id="regForm" class="space-y-4">
+                    <div class="group">
+                        <div class="flex items-center bg-white/60 border border-white rounded-2xl px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
+                            <i class="fas fa-user text-slate-400 mr-3"></i>
+                            <input id="fullName" type="text" placeholder="ሙሉ ስም" class="bg-transparent border-none outline-none text-sm w-full placeholder-slate-400 text-slate-800 font-medium">
+                        </div>
+                    </div>
+                    
+                    <div class="group">
+                        <div class="flex items-center bg-white/60 border border-white rounded-2xl px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
+                            <i class="fas fa-phone text-slate-400 mr-3"></i>
+                            <input id="phone" type="tel" placeholder="ስልክ ቁጥር" class="bg-transparent border-none outline-none text-sm w-full placeholder-slate-400 text-slate-800 font-medium">
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <div class="relative flex items-center bg-white/60 border border-white rounded-2xl px-4 py-3 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
+                            <i class="fas fa-briefcase text-slate-400 mr-3"></i>
+                            <select id="role" class="bg-transparent border-none outline-none text-sm w-full text-slate-800 font-medium appearance-none z-10">
+                                <option value="" disabled selected>የአገልግሎት ዘርፍ ይምረጡ</option>
+                                <option>ወንጌላዊ</option>
+                                <option>አስተባባሪ</option>
+                                <option>የጸሎት ቡድን</option>
+                                <option>ዘማሪ</option>
+                            </select>
+                            <i class="fas fa-chevron-down absolute right-4 text-xs text-slate-400"></i>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="submitRegistration()" class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold shadow-xl shadow-slate-800/20 active:scale-95 transition-transform mt-4 flex justify-center items-center gap-2">
+                        <span>ይመዝገቡ</span>
+                        <i class="fas fa-arrow-right text-xs"></i>
+                    </button>
                 </form>
             </div>
         </div>
 
         <div id="admin" class="tab-content hidden">
-            <div id="adminLogin" class="glass p-8 rounded-[2.5rem] text-center shadow-xl">
-                <h2 class="text-xl font-bold mb-6 italic text-red-500 border-b pb-2">የአድሚን መግቢያ</h2>
-                <input id="adminPassword" type="password" placeholder="Passcode" class="w-full py-4 text-center rounded-2xl bg-gray-100 border-none outline-none text-2xl mb-4">
-                <button onclick="checkAdminPassword()" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold">UNLOCK</button>
-                <p class="text-[10px] text-gray-400 mt-4">ማሳሰቢያ፡ ይህ ለባለቤቱ ብቻ የተፈቀደ ቦታ ነው::</p>
-            </div>
-            <div id="adminData" class="hidden space-y-6">
-                <div class="bg-gray-900 rounded-[2.5rem] p-8 text-white text-center">
-                    <p class="text-gray-400 text-xs font-bold mb-1 uppercase tracking-widest">ጠቅላላ ተመዝጋቢዎች</p>
-                    <h1 id="totalCount" class="text-6xl font-black">0</h1>
+            <div id="adminLogin" class="glass-panel p-8 rounded-[2.5rem] text-center shadow-2xl relative overflow-hidden">
+                <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full mx-auto flex items-center justify-center text-2xl mb-4 shadow-inner">
+                    <i class="fas fa-fingerprint"></i>
                 </div>
-                <div id="adminList" class="space-y-3"></div>
+                <h2 class="text-lg font-bold text-slate-800">Admin Access</h2>
+                <p class="text-[10px] text-slate-400 mb-6">Enter secure PIN to continue</p>
+                
+                <input id="adminPassword" type="password" placeholder="••••" maxlength="4" class="w-full py-4 text-center rounded-2xl bg-slate-100 border-none outline-none text-3xl font-bold tracking-[1rem] mb-4 text-slate-800 focus:bg-white focus:ring-2 focus:ring-slate-800 transition-all placeholder-slate-300">
+                
+                <button onclick="checkAdminPassword()" class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold hover:bg-slate-900 transition shadow-lg">UNLOCK</button>
+            </div>
+
+            <div id="adminData" class="hidden space-y-6 fade-in-up">
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-[2.5rem] p-8 text-white text-center relative overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-10 -mt-10 blur-2xl"></div>
+                    <div class="absolute bottom-0 left-0 w-24 h-24 bg-indigo-500/20 rounded-full -ml-10 -mb-10 blur-xl"></div>
+                    
+                    <p class="text-slate-400 text-[10px] font-bold mb-2 uppercase tracking-[0.2em]">ጠቅላላ ተመዝጋቢዎች</p>
+                    <h1 id="totalCount" class="text-7xl font-black tracking-tighter">0</h1>
+                    <div class="mt-4 inline-flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
+                        <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                        <span class="text-[10px] font-medium">Updating Live</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center px-2">
+                    <h3 class="font-bold text-slate-800">Recent Users</h3>
+                    <button class="text-xs text-indigo-600 font-bold">View All</button>
+                </div>
+
+                <div id="adminList" class="space-y-3 pb-20"></div>
             </div>
         </div>
+
     </main>
 
-    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-white/90 backdrop-blur-xl border border-white/40 p-2 rounded-[2rem] shadow-xl flex justify-around items-center z-50">
-        <button onclick="showTab('home')" id="nav-home" class="w-12 h-12 flex items-center justify-center text-gray-400 nav-active"><i class="fas fa-home text-lg"></i></button>
-        <button onclick="showTab('training')" id="nav-training" class="w-12 h-12 flex items-center justify-center text-gray-400"><i class="fas fa-compass text-lg"></i></button>
-        <button onclick="showTab('register')" id="nav-register" class="w-14 h-14 bg-[#4f46e5] rounded-full flex items-center justify-center text-white shadow-lg transform -translate-y-4 border-4 border-[#f3f4f6]"><i class="fas fa-plus text-xl"></i></button>
-        <button onclick="showTab('admin')" id="nav-admin" class="w-12 h-12 flex items-center justify-center text-gray-400"><i class="fas fa-chart-pie text-lg"></i></button>
+    <nav class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-sm glass-panel p-2 rounded-[2.5rem] shadow-2xl flex justify-between items-center z-50">
+        <button onclick="showTab('home')" id="nav-home" class="flex-1 h-12 flex flex-col items-center justify-center text-slate-400 gap-1 nav-active transition-colors">
+            <i class="fas fa-home text-lg"></i>
+        </button>
+        
+        <button onclick="showTab('training')" id="nav-training" class="flex-1 h-12 flex flex-col items-center justify-center text-slate-400 gap-1 transition-colors">
+            <i class="fas fa-compass text-lg"></i>
+        </button>
+
+        <div class="relative w-16 flex justify-center">
+            <button onclick="showTab('register')" id="nav-register" class="absolute -top-10 w-14 h-14 bg-slate-800 rounded-full flex items-center justify-center text-white shadow-xl shadow-slate-800/40 border-[4px] border-[#f8fafc] transform transition-transform active:scale-90">
+                <i class="fas fa-plus text-xl"></i>
+            </button>
+        </div>
+
+        <button onclick="showTab('admin')" id="nav-admin" class="flex-1 h-12 flex flex-col items-center justify-center text-slate-400 gap-1 transition-colors">
+            <i class="fas fa-chart-pie text-lg"></i>
+        </button>
+        
+        <button class="flex-1 h-12 flex flex-col items-center justify-center text-slate-400 gap-1 transition-colors opacity-50 cursor-not-allowed">
+            <i class="fas fa-cog text-lg"></i>
+        </button>
     </nav>
 
     <script type="module">
@@ -113,15 +294,34 @@
             const index = new Date().getDate() % bibleVerses.length;
             const selected = bibleVerses[index];
             document.getElementById('verseText').innerText = `"${selected.t}"`;
-            document.getElementById('verseRef').innerText = `- ${selected.r}`;
+            document.getElementById('verseRef').innerText = selected.r;
+        }
+
+        function shareVerse() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'የዕለቱ ቃል',
+                    text: document.getElementById('verseText').innerText + "\n" + document.getElementById('verseRef').innerText,
+                }).catch(console.error);
+            } else { alert("Sharing not supported"); }
         }
 
         // --- Tabs ---
         window.showTab = (id) => {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById(id).classList.remove('hidden');
+            const target = document.getElementById(id);
+            target.classList.remove('hidden');
+            
+            // Re-trigger animation
+            target.classList.remove('fade-in-up');
+            void target.offsetWidth; // trigger reflow
+            target.classList.add('fade-in-up');
+
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('nav-active'));
-            if(id !== 'register') document.getElementById('nav-' + id).classList.add('nav-active');
+            if(id !== 'register') {
+                const navBtn = document.getElementById('nav-' + id);
+                if(navBtn) navBtn.classList.add('nav-active');
+            }
             window.scrollTo(0,0);
         };
 
@@ -130,38 +330,76 @@
             const name = document.getElementById('fullName').value;
             const phone = document.getElementById('phone').value;
             const role = document.getElementById('role').value;
+            
             if(!name || !phone || !role) return alert("እባክዎ ሁሉንም ይሙሉ!");
+            
+            const btn = document.querySelector('#register button');
+            const originalContent = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i>';
+            btn.disabled = true;
+
             try {
                 await addDoc(collection(db, 'registrations'), { name, phone, role, createdAt: serverTimestamp() });
-                alert("ተመዝግበዋል!");
+                alert("ተመዝግበዋል! እግዚአብሔር ይባርክዎ።");
                 document.getElementById('regForm').reset();
                 showTab('home');
-            } catch(e) { alert("ስህተት!"); }
+            } catch(e) { 
+                alert("ስህተት ተፈጥሯል፣ እባክዎ እንደገና ይሞክሩ።"); 
+            } finally {
+                btn.innerHTML = originalContent;
+                btn.disabled = false;
+            }
         };
 
-        // --- Admin Security ---
+        // --- Admin ---
         window.checkAdminPassword = () => {
-            // እዚህ ጋር 9876 የሚለውን ወደፈለግከው ቁጥር ቀይረው (ለምሳሌ 2024)
-            if(document.getElementById('adminPassword').value === '9876') {
+            const pass = document.getElementById('adminPassword').value;
+            if(pass === '9876') { // Change logic if needed
                 document.getElementById('adminLogin').classList.add('hidden');
                 document.getElementById('adminData').classList.remove('hidden');
                 loadAdminData();
-            } else { alert("የይለፍ ቃል ተሳስቷል!"); }
+            } else { 
+                document.getElementById('adminPassword').classList.add('bg-red-100');
+                setTimeout(()=> document.getElementById('adminPassword').classList.remove('bg-red-100'), 500);
+            }
         };
 
         function loadAdminData() {
             onSnapshot(query(collection(db, 'registrations'), orderBy('createdAt', 'desc')), (snap) => {
-                document.getElementById('totalCount').innerText = snap.size;
+                const countEl = document.getElementById('totalCount');
+                
+                // Animate count up
+                let start = parseInt(countEl.innerText);
+                const end = snap.size;
+                if(start !== end) countEl.innerText = end;
+
                 const list = document.getElementById('adminList');
                 list.innerHTML = '';
                 snap.docs.forEach(doc => {
                     const d = doc.data();
-                    list.innerHTML += `<div class="glass p-4 rounded-2xl flex justify-between items-center"><div><h4 class="font-bold text-sm text-gray-800">${d.name}</h4><p class="text-[10px] text-gray-500">${d.phone}</p></div><span class="text-[10px] font-bold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">${d.role}</span></div>`;
+                    const colorClass = d.role === 'ወንጌላዊ' ? 'text-blue-600 bg-blue-50' : (d.role === 'አስተባባሪ' ? 'text-purple-600 bg-purple-50' : 'text-orange-600 bg-orange-50');
+                    
+                    list.innerHTML += `
+                        <div class="glass-card p-4 rounded-2xl flex justify-between items-center transform transition hover:scale-[1.02]">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 font-bold text-xs">
+                                    ${d.name.charAt(0)}
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-slate-800">${d.name}</h4>
+                                    <p class="text-[10px] text-slate-400 font-mono">${d.phone}</p>
+                                </div>
+                            </div>
+                            <span class="text-[10px] font-bold ${colorClass} px-3 py-1 rounded-full border border-opacity-20">${d.role}</span>
+                        </div>
+                    `;
                 });
             });
         }
 
         getDailyVerse();
+        // Initial setup
+        document.getElementById('home').classList.add('fade-in-up');
     </script>
 </body>
 </html>
