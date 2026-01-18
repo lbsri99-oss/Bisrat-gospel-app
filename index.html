@@ -2,27 +2,26 @@
 <html lang="am">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ወንጌል ለእኔ - Bisrat Gospel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { -webkit-tap-highlight-color: transparent; font-family: 'Noto Sans Ethiopic', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        body { -webkit-tap-highlight-color: transparent; font-family: 'Noto Sans Ethiopic', sans-serif; background-attachment: fixed; }
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.5); }
         .nav-active { color: #4f46e5; }
         .tab-content.hidden { display: none; }
     </style>
 </head>
-<body class="bg-[#f3f4f6] text-gray-800 h-screen overflow-hidden flex flex-col">
+<body class="bg-[#f3f4f6] text-gray-800 min-h-screen flex flex-col pb-32">
 
-    <header class="px-6 pt-10 pb-4 flex justify-between items-center z-20">
+    <header class="px-6 pt-10 pb-4 flex justify-between items-center bg-[#f3f4f6]/80 sticky top-0 z-30 backdrop-blur-md">
         <h1 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#4f46e5] to-[#8b5cf6]">ወንጌል ለእኔ</h1>
     </header>
 
-    <main class="flex-1 overflow-y-auto px-6 pb-32 z-10">
+    <main class="flex-1 px-6 z-10">
         <div id="home" class="tab-content space-y-6">
-            
             <div class="glass p-6 rounded-[2rem] border-l-4 border-l-indigo-500 shadow-sm">
                 <h3 class="font-bold text-gray-400 text-[10px] uppercase mb-1 tracking-widest">የዕለቱ ቃል</h3>
                 <p id="verseText" class="text-gray-800 text-lg font-medium italic leading-relaxed">ጥቅሱ በመጫን ላይ...</p>
@@ -43,9 +42,7 @@
 
         <div id="training" class="tab-content hidden space-y-5">
             <h2 class="text-xl font-bold text-gray-800">ትምህርቶች</h2>
-            <div id="lessonsList" class="space-y-4">
-                <p class="text-center text-gray-400 py-10">ትምህርቶች በመጫን ላይ...</p>
-            </div>
+            <div id="lessonsList" class="space-y-4"></div>
         </div>
 
         <div id="register" class="tab-content hidden">
@@ -67,16 +64,17 @@
 
         <div id="admin" class="tab-content hidden">
             <div id="adminLogin" class="glass p-8 rounded-[2.5rem] text-center shadow-xl">
-                <h2 class="text-xl font-bold mb-6">Admin Access</h2>
+                <h2 class="text-xl font-bold mb-6 italic text-red-500 border-b pb-2">የአድሚን መግቢያ</h2>
                 <input id="adminPassword" type="password" placeholder="Passcode" class="w-full py-4 text-center rounded-2xl bg-gray-100 border-none outline-none text-2xl mb-4">
                 <button onclick="checkAdminPassword()" class="w-full bg-gray-900 text-white py-4 rounded-2xl font-bold">UNLOCK</button>
+                <p class="text-[10px] text-gray-400 mt-4">ማሳሰቢያ፡ ይህ ለባለቤቱ ብቻ የተፈቀደ ቦታ ነው::</p>
             </div>
             <div id="adminData" class="hidden space-y-6">
                 <div class="bg-gray-900 rounded-[2.5rem] p-8 text-white text-center">
-                    <p class="text-gray-400 text-xs font-bold mb-1 uppercase">ጠቅላላ ተመዝጋቢዎች</p>
+                    <p class="text-gray-400 text-xs font-bold mb-1 uppercase tracking-widest">ጠቅላላ ተመዝጋቢዎች</p>
                     <h1 id="totalCount" class="text-6xl font-black">0</h1>
                 </div>
-                <div id="adminList" class="space-y-3 pb-20"></div>
+                <div id="adminList" class="space-y-3"></div>
             </div>
         </div>
     </main>
@@ -104,80 +102,51 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- ጥቅሶችን በየቀኑ የሚቀይር ፋንክሽን ---
+        // --- ጥቅስ ---
         function getDailyVerse() {
             const bibleVerses = [
                 { t: "በእርሱ የሚያምን ሁሉ የዘላለም ሕይወት እንዲኖረው እንጂ እንዳይጠፋ እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና።", r: "ዮሐንስ 3:16" },
                 { t: "ጌታ እረኛዬ ነው፥ የሚያሳጣኝም የለም።", r: "መዝሙር 23:1" },
                 { t: "ሁሉን በሚያበላታኝ በክርስቶስ ሁሉን እችላለሁ።", r: "ፊልጵስዩስ 4:13" },
-                { t: "እግዚአብሔር ብርሃኔና መድኃኒቴ ነው፤ የሚያስፈራኝ ማን ነው?", r: "መዝሙር 27:1" },
-                { t: "የእግዚአብሔር ቃል ለእግሬ መብራት ለመንገዴም ብርሃን ነው።", r: "መዝሙር 119:105" },
-                { t: "ለእግዚአብሔር የሚሳነው ነገር የለምና።", r: "ሉቃስ 1:37" },
-                { t: "እኔ መንገድና እውነት ሕይወትም ነኝ፤ በእኔ በቀር ወደ አብ የሚመጣ የለም።", r: "ዮሐንስ 14:6" },
-                { t: "ጌታ ኢየሱስ ክርስቶስን እመን አንተና ቤተ ሰዎችህ ትድናላችሁ።", r: "ሐዋርያት 16:31" },
-                { t: "በፍጹም ልብህ በእግዚአብሔር ታመን፥ በራስህም ማስተዋል አትደገፍ።", r: "ምሳሌ 3:5" },
-                { t: "የሚጠይቅ ሁሉ ይቀበላልና፥ የሚፈልገውም ያገኛል።", r: "ማቴዎስ 7:8" }
+                { t: "የእግዚአብሔር ቃል ለእግሬ መብራት ለመንገዴም ብርሃን ነው።", r: "መዝሙር 119:105" }
             ];
-
-            const today = new Date();
-            const index = (today.getDate() + today.getMonth()) % bibleVerses.length;
+            const index = new Date().getDate() % bibleVerses.length;
             const selected = bibleVerses[index];
-
             document.getElementById('verseText').innerText = `"${selected.t}"`;
             document.getElementById('verseRef').innerText = `- ${selected.r}`;
         }
 
-        // --- Tab መቀያየሪያ ---
+        // --- Tabs ---
         window.showTab = (id) => {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
             document.getElementById(id).classList.remove('hidden');
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('nav-active'));
             if(id !== 'register') document.getElementById('nav-' + id).classList.add('nav-active');
+            window.scrollTo(0,0);
         };
 
-        // --- ምዝገባ ---
+        // --- Registration ---
         window.submitRegistration = async () => {
             const name = document.getElementById('fullName').value;
             const phone = document.getElementById('phone').value;
             const role = document.getElementById('role').value;
             if(!name || !phone || !role) return alert("እባክዎ ሁሉንም ይሙሉ!");
-            
             try {
                 await addDoc(collection(db, 'registrations'), { name, phone, role, createdAt: serverTimestamp() });
-                alert("በተሳካ ሁኔታ ተመዝግበዋል!");
+                alert("ተመዝግበዋል!");
                 document.getElementById('regForm').reset();
                 showTab('home');
-            } catch(e) { alert("ስህተት ተከስቷል!"); }
+            } catch(e) { alert("ስህተት!"); }
         };
 
-        // --- ትምህርቶች ---
-        function getLessons() {
-            const q = query(collection(db, 'lessons'), orderBy('createdAt', 'desc'));
-            onSnapshot(q, (snap) => {
-                const list = document.getElementById('lessonsList');
-                list.innerHTML = '';
-                if(snap.empty) {
-                    list.innerHTML = '<p class="text-center text-gray-400 py-10">ምንም ትምህርት የለም።</p>';
-                    return;
-                }
-                snap.docs.forEach(doc => {
-                    const d = doc.data();
-                    list.innerHTML += `
-                        <div class="bg-white rounded-[2rem] p-4 shadow-sm flex gap-4 items-center">
-                            <a href="${d.videoUrl}" target="_blank" class="w-16 h-16 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600"><i class="fas fa-play"></i></a>
-                            <div><h3 class="font-bold text-sm">${d.title}</h3><p class="text-xs text-gray-400">${d.teacher || 'BSri Gospel'}</p></div>
-                        </div>`;
-                });
-            });
-        }
-
-        // --- Admin ---
+        // --- Admin Security ---
         window.checkAdminPassword = () => {
-            if(document.getElementById('adminPassword').value === '1234') {
+            // እዚህ ጋር 9876 የሚለውን ወደፈለግከው ቁጥር ቀይረው (ለምሳሌ 2024)
+            if(document.getElementById('adminPassword').value === '9876') {
                 document.getElementById('adminLogin').classList.add('hidden');
                 document.getElementById('adminData').classList.remove('hidden');
                 loadAdminData();
-            } else { alert("የተሳሳተ የይለፍ ቃል!"); }
+            } else { alert("የይለፍ ቃል ተሳስቷል!"); }
         };
 
         function loadAdminData() {
@@ -187,14 +156,12 @@
                 list.innerHTML = '';
                 snap.docs.forEach(doc => {
                     const d = doc.data();
-                    list.innerHTML += `<div class="glass p-4 rounded-2xl flex justify-between items-center"><div><h4 class="font-bold text-sm">${d.name}</h4><p class="text-[10px] text-gray-500">${d.phone}</p></div><span class="text-[10px] font-bold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">${d.role}</span></div>`;
+                    list.innerHTML += `<div class="glass p-4 rounded-2xl flex justify-between items-center"><div><h4 class="font-bold text-sm text-gray-800">${d.name}</h4><p class="text-[10px] text-gray-500">${d.phone}</p></div><span class="text-[10px] font-bold bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full">${d.role}</span></div>`;
                 });
             });
         }
 
-        // Start App
         getDailyVerse();
-        getLessons();
     </script>
 </body>
 </html>
