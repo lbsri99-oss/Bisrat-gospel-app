@@ -3,259 +3,340 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#f8fafc">
     <title>ወንጌል ለእኔ - Premium</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Ethiopic:wght@100;300;400;600;700;900&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --primary: #4f46e5;
-            --surface: #ffffff;
-            --bg: #f8fafc;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
+        /* --- 1. GENERAL RESET & FONTS --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            height: 100vh;
+            overflow: hidden;
         }
 
-        body { 
-            font-family: 'Noto Sans Ethiopic', sans-serif; 
-            background-color: var(--bg);
-            color: var(--text-main);
-            -webkit-tap-highlight-color: transparent;
-            overflow: hidden; /* App feel */
-        }
-
-        /* Modern Scrollbar hiding */
-        ::-webkit-scrollbar { display: none; }
-        * { -ms-overflow-style: none; scrollbar-width: none; }
-
-        /* The "Expensive" Glass Effect */
-        .glass-morphism {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
-        }
-
-        /* Smooth Page Transitions */
+        /* --- 2. LAYOUT UTILITIES --- */
         .page-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
+            padding-top: 80px; /* Header Space */
+            padding-bottom: 100px; /* Nav Space */
             overflow-y: auto;
-            /* እዚህ ጋር ነው የተስተካከለው - ከላይ ክፍተት እንዲኖረው ተደርጓል */
-            padding-top: 110px; 
-            padding-bottom: 120px;
-            opacity: 0;
-            visibility: hidden;
-            transform: scale(0.95);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.3s ease;
+            background: #f0f2f5;
         }
-
-        .page-active {
-            opacity: 1;
-            visibility: visible;
-            transform: scale(1);
-            z-index: 10;
-        }
-
-        /* Modern Card Design */
-        .premium-card {
-            background: white;
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
-            transition: transform 0.2s ease;
-        }
-        .premium-card:active { transform: scale(0.98); }
-
-        /* Typography Polish */
-        .text-balance { text-wrap: balance; }
+        .page-active { opacity: 1; visibility: visible; z-index: 5; }
         
-        /* Loading Screen */
-        #app-loader {
-            position: fixed; inset: 0; z-index: 9999;
-            background: #fff;
-            display: flex; flex-direction: column;
-            justify-content: center; items-center;
-            transition: opacity 0.6s ease;
+        /* Hide Scrollbar */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* --- 3. COMPONENTS --- */
+        
+        /* HEADER (TOP) */
+        .app-header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 20px;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
+        .brand-text h1 { font-size: 20px; font-weight: 900; color: #333; }
+        .brand-text span { color: #6366f1; }
+        .brand-sub { font-size: 10px; font-weight: bold; color: #6366f1; letter-spacing: 1px; text-transform: uppercase; }
+        .icon-btn { width: 40px; height: 40px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #555; }
+
+        /* CARDS */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 0 20px 20px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* HERO CARD (Gradient) */
+        .hero-card {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+        }
+        .tag-pill {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .verse-text { font-size: 18px; line-height: 1.5; font-weight: 500; margin-bottom: 15px; }
+        .verse-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; }
+        .share-btn { background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; border: none; color: white; display: flex; align-items: center; justify-content: center; }
+
+        /* FEED ITEMS */
+        .feed-item { border-left: 4px solid #6366f1; }
+        .feed-tag { color: #6366f1; background: #eef2ff; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
+        .feed-title { font-size: 16px; font-weight: bold; margin: 8px 0 4px 0; color: #1f2937; }
+        .feed-body { font-size: 13px; color: #6b7280; line-height: 1.5; margin-bottom: 12px; }
+        .feed-author { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #9ca3af; font-weight: bold; }
+        .avatar-circle { width: 24px; height: 24px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6b7280; font-size: 10px; }
+
+        /* FORMS */
+        .input-group { margin-bottom: 15px; }
+        .input-label { display: block; font-size: 12px; font-weight: bold; color: #6b7280; margin-bottom: 5px; margin-left: 5px; }
+        .modern-input { width: 100%; background: #f9fafb; border: 1px solid #f3f4f6; padding: 14px; border-radius: 12px; font-size: 14px; outline: none; transition: all 0.2s; }
+        .modern-input:focus { border-color: #6366f1; background: white; }
+        .btn-primary { width: 100%; background: #111827; color: white; border: none; padding: 16px; border-radius: 14px; font-weight: bold; font-size: 14px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        
+        /* ADMIN LOGIN */
+        .admin-screen { display: flex; flex-col; align-items: center; justify-content: center; height: 60vh; text-align: center; }
+        .pin-input { font-size: 24px; letter-spacing: 5px; text-align: center; width: 150px; border: none; border-bottom: 2px solid #ddd; background: transparent; padding: 10px; outline: none; }
+        .pin-input:focus { border-color: #6366f1; }
+
+        /* NAVIGATION (BOTTOM) */
+        .nav-bar {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            width: 90%; max-width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 10px 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-btn {
+            background: transparent; border: none; color: #9ca3af;
+            width: 45px; height: 45px; border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-size: 18px; transition: all 0.3s ease;
+        }
+        .nav-btn.active {
+            background: white; color: #6366f1;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            transform: translateY(-5px);
+        }
+
+        /* UTILS */
+        .hidden { display: none !important; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px 10px 20px; }
+        .section-title { font-size: 18px; font-weight: 800; color: #1f2937; }
     </style>
 </head>
-<body class="h-screen w-full relative">
+<body>
 
-    <div id="app-loader">
-        <div class="relative w-20 h-20 mb-6">
-            <div class="absolute inset-0 border-4 border-indigo-100 rounded-full"></div>
-            <div class="absolute inset-0 border-4 border-indigo-600 rounded-full border-t-transparent animate-spin"></div>
-            <div class="absolute inset-0 flex items-center justify-center text-indigo-600">
-                <i class="fas fa-cross text-xl"></i>
-            </div>
+    <header class="app-header">
+        <div class="brand-text">
+            <p class="brand-sub">እንኳን ደህና መጡ</p>
+            <h1>ወንጌል<span>ለእኔ</span></h1>
         </div>
-        <h1 class="text-2xl font-black tracking-tight text-slate-900">ወንጌል<span class="text-indigo-600">ለእኔ</span></h1>
-        <p class="text-xs text-slate-400 mt-2 font-medium tracking-widest uppercase">Premium Edition</p>
-    </div>
-
-    <header class="fixed top-0 left-0 w-full z-40 px-6 py-4 glass-morphism flex justify-between items-center">
-        <div>
-            <p class="text-[10px] font-bold text-indigo-600 tracking-wider uppercase mb-0.5">እንኳን ደህና መጡ</p>
-            <h1 class="text-lg font-black text-slate-800">ወንጌል<span class="text-indigo-600">ለእኔ</span></h1>
-        </div>
-        <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 shadow-inner">
+        <div class="icon-btn">
             <i class="fas fa-bell"></i>
         </div>
     </header>
 
-    <main class="w-full h-full px-5">
-
+    <main>
         <div id="tab-home" class="page-container page-active">
-            
-            <div class="premium-card bg-gradient-to-br from-indigo-600 to-violet-700 text-white shadow-indigo-200 shadow-xl mb-6 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
-                
-                <span class="inline-block px-3 py-1 rounded-full bg-white/20 text-xs font-bold backdrop-blur-md mb-4 border border-white/30">የዕለቱ ቃል</span>
-                
-                <h2 id="verseText" class="text-xl font-medium leading-relaxed mb-4 text-balance opacity-90">ጥቅሱ በመጫን ላይ...</h2>
-                
-                <div class="flex justify-between items-end border-t border-white/20 pt-4">
-                    <span id="verseRef" class="font-bold text-sm tracking-wide">...</span>
-                    <button onclick="shareContent()" class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30 transition">
-                        <i class="fas fa-share text-xs"></i>
-                    </button>
+            <div class="card hero-card">
+                <span class="tag-pill">የዕለቱ ቃል</span>
+                <h2 id="verseText" class="verse-text">ጥቅሱ በመጫን ላይ...</h2>
+                <div class="verse-footer">
+                    <span id="verseRef" style="font-weight: bold; font-size: 14px;">...</span>
+                    <button class="share-btn"><i class="fas fa-share"></i></button>
                 </div>
             </div>
 
-            <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-bold text-slate-800">የኃይል ምንጭ</h3>
-                <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md">አዲስ</span>
+            <div class="section-header">
+                <h3 class="section-title">የኃይል ምንጭ</h3>
+                <span class="feed-tag">የዛሬ መልዕክት</span>
             </div>
 
-            <div id="feedList" class="space-y-4 pb-24">
-                </div>
+            <div id="feedList" style="padding-bottom: 80px;"></div>
         </div>
 
         <div id="tab-training" class="page-container">
-            <h2 class="text-2xl font-black mb-6 px-1">የስልጠና ማዕከል</h2>
-            <div class="grid gap-4">
-                <div class="premium-card flex gap-4 items-center">
-                    <div class="w-16 h-16 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-500 text-2xl shadow-sm">
-                        <i class="fas fa-fire"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800">የወንጌል እሳት</h4>
-                        <p class="text-xs text-slate-500 mt-1 line-clamp-1">እንዴት በወንጌል መቃጠል እንችላለን?</p>
-                        <div class="mt-2 text-[10px] font-bold text-orange-500 bg-orange-50 inline-block px-2 py-0.5 rounded">ክፍል 1</div>
-                    </div>
+            <div class="section-header"><h2 class="section-title">የስልጠና ማዕከል</h2></div>
+            
+            <div class="card" style="display: flex; gap: 15px; align-items: center;">
+                <div style="width: 50px; height: 50px; background: #ffedd5; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #f97316; font-size: 20px;">
+                    <i class="fas fa-fire"></i>
                 </div>
+                <div>
+                    <h4 class="feed-title" style="margin: 0;">የወንጌል እሳት</h4>
+                    <p class="feed-body" style="margin: 4px 0;">እንዴት በወንጌል መቃጠል እንችላለን?</p>
+                </div>
+            </div>
 
-                <div class="premium-card flex gap-4 items-center">
-                    <div class="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-500 text-2xl shadow-sm">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-slate-800">ደቀመዝሙርነት</h4>
-                        <p class="text-xs text-slate-500 mt-1">ሰዎችን ወደ ክርስቶስ መምራት</p>
-                        <div class="mt-2 text-[10px] font-bold text-blue-500 bg-blue-50 inline-block px-2 py-0.5 rounded">ክፍል 2</div>
-                    </div>
+            <div class="card" style="display: flex; gap: 15px; align-items: center;">
+                <div style="width: 50px; height: 50px; background: #dbeafe; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 20px;">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div>
+                    <h4 class="feed-title" style="margin: 0;">ደቀመዝሙርነት</h4>
+                    <p class="feed-body" style="margin: 4px 0;">ሰዎችን ወደ ክርስቶስ መምራት</p>
                 </div>
             </div>
         </div>
 
         <div id="tab-register" class="page-container">
-            <div class="premium-card relative overflow-hidden">
-                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500"></div>
-                <h2 class="text-xl font-black text-center mb-2">የአገልጋይነት ምዝገባ</h2>
-                <p class="text-center text-xs text-slate-400 mb-6">አብረን እንስራ፣ መንግስቱን እናስፋ</p>
-
-                <form id="regForm" class="space-y-4">
-                    <div class="space-y-1">
-                        <label class="text-xs font-bold text-slate-500 ml-2">ሙሉ ስም</label>
-                        <input id="fullName" type="text" class="w-full bg-slate-50 border-none rounded-2xl px-5 py-4 text-sm font-medium outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all placeholder-slate-300" placeholder="ስምዎን ያስገቡ">
+            <div class="card">
+                <h2 class="section-title" style="text-align: center; margin-bottom: 5px;">የአገልጋይነት ምዝገባ</h2>
+                <p style="text-align: center; color: #9ca3af; font-size: 12px; margin-bottom: 20px;">አብረን እንስራ፣ መንግስቱን እናስፋ</p>
+                
+                <form id="regForm">
+                    <div class="input-group">
+                        <label class="input-label">ሙሉ ስም</label>
+                        <input id="fullName" type="text" class="modern-input" placeholder="ስምዎን ያስገቡ">
                     </div>
-                    
-                    <div class="space-y-1">
-                        <label class="text-xs font-bold text-slate-500 ml-2">ስልክ ቁጥር</label>
-                        <input id="phone" type="tel" class="w-full bg-slate-50 border-none rounded-2xl px-5 py-4 text-sm font-medium outline-none focus:ring-2 focus:ring-indigo-500/20 transition-all placeholder-slate-300" placeholder="09...">
+                    <div class="input-group">
+                        <label class="input-label">ስልክ ቁጥር</label>
+                        <input id="phone" type="tel" class="modern-input" placeholder="09...">
                     </div>
-
-                    <div class="space-y-1">
-                        <label class="text-xs font-bold text-slate-500 ml-2">የአገልግሎት ዘርፍ</label>
-                        <div class="relative">
-                            <select id="role" class="w-full bg-slate-50 border-none rounded-2xl px-5 py-4 text-sm font-medium outline-none appearance-none text-slate-700">
-                                <option value="">ይምረጡ...</option>
-                                <option>ወንጌላዊ</option>
-                                <option>አስተባባሪ</option>
-                                <option>የጸሎት ወታደር</option>
-                            </select>
-                            <i class="fas fa-chevron-down absolute right-5 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none"></i>
-                        </div>
+                    <div class="input-group">
+                        <label class="input-label">የአገልግሎት ዘርፍ</label>
+                        <select id="role" class="modern-input">
+                            <option value="">ይምረጡ...</option>
+                            <option>ወንጌላዊ</option>
+                            <option>አስተባባሪ</option>
+                            <option>የጸሎት ወታደር</option>
+                        </select>
                     </div>
-
-                    <button type="button" onclick="submitRegistration()" class="w-full bg-slate-900 text-white py-4 rounded-2xl font-bold shadow-lg shadow-slate-900/20 active:scale-95 transition-all mt-4 flex justify-center items-center gap-2">
-                        <span>ይመዝገቡ</span>
-                        <i class="fas fa-arrow-right text-xs"></i>
+                    <button type="button" onclick="handleRegistration()" class="btn-primary">
+                        ይመዝገቡ <i class="fas fa-arrow-right"></i>
                     </button>
                 </form>
             </div>
         </div>
 
-         <div id="tab-admin" class="page-container">
-            <div id="adminLogin" class="flex flex-col items-center justify-center h-[60vh]">
-                <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-800 text-2xl mb-6 shadow-sm">
-                    <i class="fas fa-fingerprint"></i>
+        <div id="tab-admin" class="page-container">
+            <div id="adminLogin" class="admin-screen">
+                <div style="width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <i class="fas fa-fingerprint" style="font-size: 24px; color: #374151;"></i>
                 </div>
-                <h2 class="text-xl font-bold text-slate-800 mb-1">Admin Access</h2>
-                <p class="text-xs text-slate-400 mb-8">Enter secure PIN</p>
-                
-                <div class="flex gap-3 mb-8">
-                    <input id="adminPassword" type="password" maxlength="4" class="w-32 py-3 text-center text-2xl font-bold tracking-[0.5em] border-b-2 border-slate-200 focus:border-indigo-600 outline-none bg-transparent transition-colors">
-                </div>
-                
-                <button onclick="checkAdminPassword()" class="px-8 py-3 bg-indigo-600 text-white rounded-full font-bold shadow-lg shadow-indigo-600/30 active:scale-95 transition-transform">UNLOCK</button>
+                <h2 style="font-size: 20px; margin-bottom: 5px;">Admin Access</h2>
+                <input id="adminPassword" type="password" maxlength="4" class="pin-input" placeholder="****">
+                <button onclick="checkAdminPassword()" style="margin-top: 20px; padding: 10px 30px; background: #4f46e5; color: white; border: none; border-radius: 20px; font-weight: bold;">Unlock</button>
             </div>
 
-            <div id="adminData" class="hidden pb-24">
-                <div class="bg-slate-900 rounded-[2rem] p-8 text-white mb-6 relative overflow-hidden">
-                    <div class="absolute right-0 top-0 w-32 h-32 bg-indigo-500 rounded-full blur-[60px] opacity-40"></div>
-                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-2">Total Users</p>
-                    <h1 id="totalCount" class="text-6xl font-black tracking-tighter">0</h1>
+            <div id="adminData" class="hidden">
+                <div class="card" style="background: #111827; color: white;">
+                    <p style="font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 2px;">Total Users</p>
+                    <h1 id="totalCount" style="font-size: 48px; font-weight: 900;">0</h1>
                 </div>
-                <h3 class="font-bold text-slate-800 mb-4 px-2">የቅርብ ተመዝጋቢዎች</h3>
-                <div id="adminList" class="space-y-3"></div>
+                <div class="section-header"><h3 class="section-title">የቅርብ ተመዝጋቢዎች</h3></div>
+                <div id="adminList"></div>
             </div>
-         </div>
-
+        </div>
     </main>
 
-    <nav class="fixed bottom-8 left-1/2 -translate-x-1/2 w-[88%] glass-morphism rounded-[2rem] p-2 flex justify-between items-center z-50 shadow-2xl shadow-indigo-900/10">
-        <button onclick="switchTab('home')" class="nav-btn w-14 h-14 rounded-full flex flex-col items-center justify-center text-indigo-600 bg-white shadow-sm transition-all duration-300">
-            <i class="fas fa-home text-lg"></i>
+    <nav class="nav-bar">
+        <button onclick="switchTab('home')" id="btn-home" class="nav-btn active">
+            <i class="fas fa-home"></i>
         </button>
-        
-        <button onclick="switchTab('training')" class="nav-btn w-12 h-12 rounded-full flex flex-col items-center justify-center text-slate-400 hover:text-indigo-500 transition-colors">
-            <i class="fas fa-compass text-lg"></i>
+        <button onclick="switchTab('training')" id="btn-training" class="nav-btn">
+            <i class="fas fa-compass"></i>
         </button>
-
-        <button onclick="switchTab('register')" class="nav-btn w-12 h-12 rounded-full flex flex-col items-center justify-center text-slate-400 hover:text-indigo-500 transition-colors">
-            <i class="fas fa-plus-circle text-xl"></i>
+        <button onclick="switchTab('register')" id="btn-register" class="nav-btn">
+            <i class="fas fa-plus-circle"></i>
         </button>
-
-        <button onclick="switchTab('admin')" class="nav-btn w-12 h-12 rounded-full flex flex-col items-center justify-center text-slate-400 hover:text-indigo-500 transition-colors">
-            <i class="fas fa-cog text-lg"></i>
+        <button onclick="switchTab('admin')" id="btn-admin" class="nav-btn">
+            <i class="fas fa-cog"></i>
         </button>
     </nav>
+
+    <script>
+        // --- Navigation Logic ---
+        function switchTab(tabId) {
+            // Update Buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('btn-' + tabId).classList.add('active');
+
+            // Update Pages
+            document.querySelectorAll('.page-container').forEach(page => page.classList.remove('page-active'));
+            document.getElementById('tab-' + tabId).classList.add('page-active');
+            window.scrollTo(0, 0);
+        }
+
+        // --- Admin Logic ---
+        function checkAdminPassword() {
+            if(document.getElementById('adminPassword').value === '9876') {
+                document.getElementById('adminLogin').classList.add('hidden');
+                document.getElementById('adminData').classList.remove('hidden');
+                if(window.loadAdminDataFirebase) window.loadAdminDataFirebase();
+            } else {
+                alert("Incorrect PIN");
+            }
+        }
+
+        // --- Data & Content ---
+        const contentDatabase = [
+            { title: "የወንጌል አደራ", body: "ወንጌልን አለመስበክ በሰው ላይ ከመፍረድ ይቆጠራል። ዛሬ ለአንድ ሰው ስለ ኢየሱስ እንናገር።", author: "ወንድም ቢኒያም", tag: "አደራ" },
+            { title: "የጸሎት ኃይል", body: "ጉልበታችን የሚበረታው በጉልበታችን ስንሆን ነው። ጸሎት ቁልፍ ነው።", author: "እህት ሣራ", tag: "ጸሎት" },
+            { title: "ፍቅር ያሸንፋል", body: "ፍቅር ታጋሽ ነው፥ ፍቅር ቸር ነው። በጥላቻ ዓለም ውስጥ የክርስቶስን ፍቅር እናሳይ።", author: "ፓስተር ዳዊት", tag: "ፍቅር" },
+            { title: "መንፈስ ቅዱስ", body: "ያለ መንፈስ ቅዱስ እርዳታ ክርስቲያናዊ ህይወት መኖር አይቻልም።", author: "ወንድም ዮናስ", tag: "መንፈስ" },
+            { title: "ተስፋ አትቁረጥ", body: "እግዚአብሔር በጊዜው ውብ አድርጎ ይሰራዋል። ታገስ።", author: "የዕለቱ መልዕክት", tag: "ተስፋ" },
+            // ... (Previous logic maintained) ...
+            { title: "የእግዚአብሔር ቃል", body: "ሰው ከእግዚአብሔር አፍ በሚወጣ ቃል ሁሉ እንጂ በእንጀራ ብቻ አይኖርም።", author: "መዝሙር", tag: "ቃል" },
+            { title: "ይቅርታ", body: "ይቅር ማለት ለራስ ሰላም መስጠት ነው። ክርስቶስ ይቅር እንዳለን ይቅር እንበል።", author: "እህት ቤተል", tag: "ምህረት" }
+        ];
+
+        const verses = [
+            { t: "በእርሱ የሚያምን ሁሉ የዘላለም ሕይወት እንዲኖረው እንጂ እንዳይጠፋ እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና።", r: "ዮሐንስ 3:16" },
+            { t: "እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም። በለመለመ መስክ ያሳድረኛል፤ በዕረፍት ውሃ ዘንድ ይመራኛል።", r: "መዝሙር 23:1-2" },
+            { t: "ብርታቴና ዝማሬዬ እግዚአብሔር ነው፤ እርሱም መድኃኒት ሆነልኝ።", r: "መዝሙር 118:14" },
+            { t: "የእግዚአብሔር ቃል ለእግሬ መብራት ለመንገዴም ብርሃን ነው።", r: "መዝሙር 119:105" }
+        ];
+
+        window.onload = function() {
+            // Load Verse
+            const vIdx = new Date().getDate() % verses.length;
+            document.getElementById('verseText').innerText = `"${verses[vIdx].t}"`;
+            document.getElementById('verseRef').innerText = verses[vIdx].r;
+
+            // Load Feed
+            const feedContainer = document.getElementById('feedList');
+            const today = new Date().getDate();
+            const indices = [(today-1)%contentDatabase.length, (today+5)%contentDatabase.length, (today+15)%contentDatabase.length];
+            
+            let html = '';
+            indices.forEach(idx => {
+                const post = contentDatabase[idx] || contentDatabase[0];
+                html += `
+                    <div class="card feed-item">
+                        <div style="display:flex; justify-content:space-between;">
+                            <span class="feed-tag">${post.tag}</span>
+                            <i class="fas fa-ellipsis-h" style="color:#d1d5db;"></i>
+                        </div>
+                        <h3 class="feed-title">${post.title}</h3>
+                        <p class="feed-body">${post.body}</p>
+                        <div class="feed-author">
+                            <div class="avatar-circle">${post.author.charAt(0)}</div>
+                            <span>${post.author}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            feedContainer.innerHTML = html;
+        };
+
+        // Fallback Registration (If firebase fails)
+        window.handleRegistration = function() {
+            alert("ዳታቤዝ እየተገናኘ ነው... እባክዎ ትንሽ ይጠብቁ");
+        };
+    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
-        // Firebase Setup (Keep your config)
         const firebaseConfig = {
           apiKey: "AIzaSyAC_PXjxU24c7yf8thr0eZyNFI06peTQ5g",
           authDomain: "bsri-gospel-app.firebaseapp.com",
@@ -267,161 +348,46 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- Data: Motivational Content (Feed) ---
-        const motivationalPosts = [
-            {
-                title: "የወንጌል አደራ አለብን",
-                body: "ወንጌልን አለመስበክ በሰው ላይ ከመፍረድ ይቆጠራል። ዛሬ ለአንድ ሰው ስለ ኢየሱስ እንናገር።",
-                author: "ወንድም ቢኒያም",
-                tag: "መልዕክት"
-            },
-            {
-                title: "አትፍራ፣ ተናገር!",
-                body: "እግዚአብሔር የኃይልና የፍቅር መንፈስ እንጂ የፍርሃት መንፈስ አልሰጠንም። 2ኛ ጢሞ 1:7",
-                author: "የቀን ጥቅስ",
-                tag: "ማነቃቂያ"
-            },
-            {
-                title: "የጸሎት አስፈላጊነት",
-                body: "ከአገልግሎት በፊት ጸሎት፣ በአገልግሎት ጊዜ ጸሎት፣ ከአገልግሎት በኋላ ጸሎት። ኃይላችን ይህ ነው።",
-                author: "አገልጋይ ዮናስ",
-                tag: "ትምህርት"
-            }
-        ];
-
-        // --- Corrected Bible Verses ---
-        const verses = [
-            { t: "በእርሱ የሚያምን ሁሉ የዘላለም ሕይወት እንዲኖረው እንጂ እንዳይጠፋ እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና።", r: "ዮሐንስ 3:16" },
-            { t: "እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም። በለመለመ መስክ ያሳድረኛል፤ በዕረፍት ውሃ ዘንድ ይመራኛል።", r: "መዝሙር 23:1-2" },
-            { t: "ብርታቴና ዝማሬዬ እግዚአብሔር ነው፤ እርሱም መድኃኒት ሆነልኝ።", r: "መዝሙር 118:14" },
-            { t: "የእግዚአብሔር ቃል ለእግሬ መብራት ለመንገዴም ብርሃን ነው።", r: "መዝሙር 119:105" }
-        ];
-
-        // --- Initialization ---
-        window.addEventListener('load', () => {
-            // Loader Out Animation
-            setTimeout(() => {
-                const loader = document.getElementById('app-loader');
-                loader.style.opacity = '0';
-                loader.style.pointerEvents = 'none'; // Prevent clicking
-                
-                // Initialize Data
-                loadDailyVerse();
-                loadFeed();
-            }, 1200);
-        });
-
-        function loadDailyVerse() {
-            const idx = new Date().getDate() % verses.length;
-            document.getElementById('verseText').innerText = `"${verses[idx].t}"`;
-            document.getElementById('verseRef').innerText = verses[idx].r;
-        }
-
-        function loadFeed() {
-            const feedContainer = document.getElementById('feedList');
-            let html = '';
-            motivationalPosts.forEach(post => {
-                html += `
-                    <div class="premium-card p-5 !py-4 border-l-4 border-indigo-500">
-                        <div class="flex justify-between items-start mb-2">
-                            <span class="text-[10px] font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded uppercase tracking-wide">${post.tag}</span>
-                            <i class="fas fa-ellipsis-h text-slate-300"></i>
-                        </div>
-                        <h3 class="font-bold text-slate-800 text-base mb-1">${post.title}</h3>
-                        <p class="text-sm text-slate-500 leading-relaxed mb-3">${post.body}</p>
-                        <div class="flex items-center gap-2">
-                            <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-[10px] font-bold text-slate-500">
-                                ${post.author.charAt(0)}
-                            </div>
-                            <span class="text-xs font-bold text-slate-400">${post.author}</span>
-                        </div>
-                    </div>
-                `;
-            });
-            feedContainer.innerHTML = html;
-        }
-
-        // --- Navigation Logic (Smooth Swapping) ---
-        window.switchTab = (tabId) => {
-            // 1. Handle Nav Buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('bg-white', 'text-indigo-600', 'shadow-sm', 'w-14', 'h-14', '-translate-y-2');
-                btn.classList.add('text-slate-400', 'w-12', 'h-12'); // Reset to default
-            });
-            
-            // Highlight Active Button
-            const activeBtn = event.currentTarget; // The clicked button
-            activeBtn.classList.remove('text-slate-400', 'w-12', 'h-12');
-            activeBtn.classList.add('bg-white', 'text-indigo-600', 'shadow-sm', 'w-14', 'h-14', '-translate-y-2');
-
-            // 2. Handle Pages
-            document.querySelectorAll('.page-container').forEach(page => {
-                page.classList.remove('page-active');
-            });
-            
-            const targetPage = document.getElementById('tab-' + tabId);
-            targetPage.scrollTop = 0; // Reset scroll
-            targetPage.classList.add('page-active');
-        };
-
-        // --- Actions ---
-        window.submitRegistration = async () => {
+        // Override the registration function with real Firebase one
+        window.handleRegistration = async () => {
             const name = document.getElementById('fullName').value;
             const phone = document.getElementById('phone').value;
             const role = document.getElementById('role').value;
             
             if(!name || !phone || !role) return alert("እባክዎ መረጃውን ያሟሉ");
             
-            const btn = document.querySelector('#regForm button');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            const btn = document.querySelector('.btn-primary');
+            const oldText = btn.innerHTML;
+            btn.innerHTML = 'Loading...';
             
             try {
                 await addDoc(collection(db, 'registrations'), { name, phone, role, createdAt: serverTimestamp() });
                 alert("ምዝገባዎ ተሳክቷል! እንኳን ደህና መጡ።");
                 document.getElementById('regForm').reset();
-                // Manually switch to home without event object
-                document.querySelectorAll('.page-container').forEach(p => p.classList.remove('page-active'));
-                document.getElementById('tab-home').classList.add('page-active');
+                switchTab('home');
             } catch(e) { 
                 alert("Network Error. Please try again."); 
             } finally {
-                btn.innerHTML = originalText;
+                btn.innerHTML = oldText;
             }
         };
 
-        window.checkAdminPassword = () => {
-            if(document.getElementById('adminPassword').value === '9876') {
-                document.getElementById('adminLogin').classList.add('hidden');
-                document.getElementById('adminData').classList.remove('hidden');
-                loadAdminData();
-            } else {
-                const input = document.getElementById('adminPassword');
-                input.style.borderColor = 'red';
-                input.classList.add('animate-pulse');
-                setTimeout(() => input.style.borderColor = '', 1000);
-            }
-        };
-
-        function loadAdminData() {
-            onSnapshot(query(collection(db, 'registrations'), orderBy('createdAt', 'desc')), (snap) => {
+        // Attach Admin Loader
+        window.loadAdminDataFirebase = () => {
+             onSnapshot(query(collection(db, 'registrations'), orderBy('createdAt', 'desc')), (snap) => {
                 document.getElementById('totalCount').innerText = snap.size;
                 const list = document.getElementById('adminList');
                 list.innerHTML = '';
                 snap.docs.forEach(doc => {
                     const d = doc.data();
                     list.innerHTML += `
-                        <div class="premium-card !p-4 flex justify-between items-center">
-                            <div>
-                                <h4 class="font-bold text-sm text-slate-800">${d.name}</h4>
-                                <p class="text-xs text-slate-400 font-mono">${d.phone}</p>
-                            </div>
-                            <span class="text-[10px] font-bold bg-slate-100 text-slate-600 px-3 py-1 rounded-full">${d.role}</span>
-                        </div>
-                    `;
+                        <div class="card" style="padding: 15px; display:flex; justify-content:space-between; align-items:center;">
+                            <div><h4 style="font-weight:bold; font-size:14px;">${d.name}</h4><p style="font-size:12px; color:#666;">${d.phone}</p></div>
+                            <span class="feed-tag">${d.role}</span>
+                        </div>`;
                 });
             });
-        }
+        };
     </script>
 </body>
 </html>
