@@ -62,24 +62,63 @@
             overflow: hidden;
         }
         
-        /* HERO CARD (Gradient) */
+        /* HERO CARD (Updated with Image) */
         .hero-card {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            position: relative;
             color: white;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
         }
+        
+        /* Background Image for Hero */
+        .hero-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.6);
+        }
+        
+        .hero-content { position: relative; z-index: 1; }
+
         .tag-pill {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.25);
             padding: 5px 12px;
             border-radius: 15px;
             font-size: 11px;
             font-weight: bold;
             display: inline-block;
             margin-bottom: 10px;
+            backdrop-filter: blur(5px);
         }
-        .verse-text { font-size: 18px; line-height: 1.5; font-weight: 500; margin-bottom: 15px; }
-        .verse-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 10px; }
-        .share-btn { background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; border: none; color: white; display: flex; align-items: center; justify-content: center; }
+        .verse-text { font-size: 18px; line-height: 1.5; font-weight: 500; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+        .verse-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; }
+        .share-btn { background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; border: none; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+
+        /* REVIVAL CARD STYLE */
+        .revival-card {
+            padding: 0; /* Remove padding for full image */
+        }
+        .revival-img-container {
+            width: 100%;
+            height: 180px;
+            position: relative;
+        }
+        .revival-img {
+            width: 100%; height: 100%; object-fit: cover;
+        }
+        .revival-content {
+            padding: 20px;
+        }
+        .revival-badge {
+            position: absolute; top: 15px; left: 15px;
+            background: #ef4444; color: white;
+            padding: 5px 10px; border-radius: 8px;
+            font-size: 10px; font-weight: bold; text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
 
         /* FEED ITEMS */
         .feed-item { border-left: 4px solid #6366f1; }
@@ -94,7 +133,7 @@
         .input-label { display: block; font-size: 12px; font-weight: bold; color: #6b7280; margin-bottom: 5px; margin-left: 5px; }
         .modern-input { width: 100%; background: #f9fafb; border: 1px solid #f3f4f6; padding: 14px; border-radius: 12px; font-size: 14px; outline: none; transition: all 0.2s; }
         .modern-input:focus { border-color: #6366f1; background: white; }
-        .btn-primary { width: 100%; background: #111827; color: white; border: none; padding: 16px; border-radius: 14px; font-weight: bold; font-size: 14px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-primary { width: 100%; background: #111827; color: white; border: none; padding: 16px; border-radius: 14px; font-weight: bold; font-size: 14px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
         
         /* ADMIN LOGIN */
         .admin-screen { display: flex; flex-col; align-items: center; justify-content: center; height: 60vh; text-align: center; }
@@ -117,7 +156,7 @@
             background: transparent; border: none; color: #9ca3af;
             width: 45px; height: 45px; border-radius: 50%;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-size: 18px; transition: all 0.3s ease;
+            font-size: 18px; transition: all 0.3s ease; cursor: pointer;
         }
         .nav-btn.active {
             background: white; color: #6366f1;
@@ -129,6 +168,9 @@
         .hidden { display: none !important; }
         .section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px 10px 20px; }
         .section-title { font-size: 18px; font-weight: 800; color: #1f2937; }
+        
+        /* New Image Helper */
+        .banner-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -145,12 +187,38 @@
 
     <main>
         <div id="tab-home" class="page-container page-active">
+            
             <div class="card hero-card">
-                <span class="tag-pill">የዕለቱ ቃል</span>
-                <h2 id="verseText" class="verse-text">ጥቅሱ በመጫን ላይ...</h2>
-                <div class="verse-footer">
-                    <span id="verseRef" style="font-weight: bold; font-size: 14px;">...</span>
-                    <button class="share-btn"><i class="fas fa-share"></i></button>
+                <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop" class="hero-bg" alt="Worship Background">
+                
+                <div class="hero-content">
+                    <span class="tag-pill">የዕለቱ ቃል</span>
+                    <h2 id="verseText" class="verse-text">ጥቅሱ በመጫን ላይ...</h2>
+                    <div class="verse-footer">
+                        <span id="verseRef" style="font-weight: bold; font-size: 14px;">...</span>
+                        <button class="share-btn"><i class="fas fa-share"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3 class="section-title">ታሪካዊ መነቃቃት</h3>
+                <span class="feed-tag" style="background:#fee2e2; color:#ef4444;">ተነሳ!</span>
+            </div>
+
+            <div class="card revival-card">
+                <div class="revival-img-container">
+                    <span class="revival-badge">1907 - ኮሪያ</span>
+                    <img src="https://images.unsplash.com/photo-1544427920-24e832256f72?q=80&w=1000&auto=format&fit=crop" class="revival-img" alt="Revival Crowd">
+                </div>
+                <div class="revival-content">
+                    <h4 class="feed-title" style="font-size: 18px;">የፒዮንግያንግ ታላቁ መነቃቃት</h4>
+                    <p class="feed-body" style="color: #4b5563;">
+                        በ1907 ዓ.ም በሰሜን ኮሪያ (ፒዮንግያንግ) የተነሳው መንፈሳዊ እንቅስቃሴ እስያ ያለችበትን መንፈሳዊ ቁመና ቀየረው። 
+                        ሁሉም ነገር የጀመረው በአንድ የጠዋት ጸሎት ላይ ጉባኤው በንስሃ ሲወድቅ ነው። ሰዎች "አቤቱ እኔን አድሰኝ" እያሉ በየመንገዱ አለቀሱ።
+                        <br><br>
+                        <i class="fas fa-fire" style="color:orange;"></i> <b>ትምህርት፡</b> መነቃቃት የሚጀምረው ከአንድ ሰው ንስሃ ነው። ዛሬ ያ ሰው አንተ ነህ?
+                    </p>
                 </div>
             </div>
 
@@ -165,6 +233,10 @@
         <div id="tab-training" class="page-container">
             <div class="section-header"><h2 class="section-title">የስልጠና ማዕከል</h2></div>
             
+            <div style="padding: 0 20px;">
+                <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?q=80&w=1000&auto=format&fit=crop" class="banner-img" alt="Bible Study">
+            </div>
+
             <div class="card" style="display: flex; gap: 15px; align-items: center;">
                 <div style="width: 50px; height: 50px; background: #ffedd5; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #f97316; font-size: 20px;">
                     <i class="fas fa-fire"></i>
@@ -184,10 +256,24 @@
                     <p class="feed-body" style="margin: 4px 0;">ሰዎችን ወደ ክርስቶስ መምራት</p>
                 </div>
             </div>
+            
+             <div class="card" style="display: flex; gap: 15px; align-items: center;">
+                <div style="width: 50px; height: 50px; background: #d1fae5; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #059669; font-size: 20px;">
+                    <i class="fas fa-book-open"></i>
+                </div>
+                <div>
+                    <h4 class="feed-title" style="margin: 0;">የመጽሐፍ ቅዱስ ጥናት</h4>
+                    <p class="feed-body" style="margin: 4px 0;">ቃሉን በጥልቀት መረዳት</p>
+                </div>
+            </div>
         </div>
 
         <div id="tab-register" class="page-container">
             <div class="card">
+                <div style="position:absolute; top:0; right:0; opacity:0.05; pointer-events:none;">
+                    <i class="fas fa-cross" style="font-size: 150px;"></i>
+                </div>
+
                 <h2 class="section-title" style="text-align: center; margin-bottom: 5px;">የአገልጋይነት ምዝገባ</h2>
                 <p style="text-align: center; color: #9ca3af; font-size: 12px; margin-bottom: 20px;">አብረን እንስራ፣ መንግስቱን እናስፋ</p>
                 
@@ -207,6 +293,7 @@
                             <option>ወንጌላዊ</option>
                             <option>አስተባባሪ</option>
                             <option>የጸሎት ወታደር</option>
+                            <option>መዘምራን</option>
                         </select>
                     </div>
                     <button type="button" onclick="handleRegistration()" class="btn-primary">
@@ -227,9 +314,12 @@
             </div>
 
             <div id="adminData" class="hidden">
-                <div class="card" style="background: #111827; color: white;">
-                    <p style="font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 2px;">Total Users</p>
-                    <h1 id="totalCount" style="font-size: 48px; font-weight: 900;">0</h1>
+                <div class="card" style="background: #111827; color: white; position: relative; overflow: hidden;">
+                    <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1000&auto=format&fit=crop" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2;" alt="">
+                    <div style="position: relative; z-index: 2;">
+                        <p style="font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 2px;">Total Users</p>
+                        <h1 id="totalCount" style="font-size: 48px; font-weight: 900;">0</h1>
+                    </div>
                 </div>
                 <div class="section-header"><h3 class="section-title">የቅርብ ተመዝጋቢዎች</h3></div>
                 <div id="adminList"></div>
@@ -283,7 +373,6 @@
             { title: "ፍቅር ያሸንፋል", body: "ፍቅር ታጋሽ ነው፥ ፍቅር ቸር ነው። በጥላቻ ዓለም ውስጥ የክርስቶስን ፍቅር እናሳይ።", author: "ፓስተር ዳዊት", tag: "ፍቅር" },
             { title: "መንፈስ ቅዱስ", body: "ያለ መንፈስ ቅዱስ እርዳታ ክርስቲያናዊ ህይወት መኖር አይቻልም።", author: "ወንድም ዮናስ", tag: "መንፈስ" },
             { title: "ተስፋ አትቁረጥ", body: "እግዚአብሔር በጊዜው ውብ አድርጎ ይሰራዋል። ታገስ።", author: "የዕለቱ መልዕክት", tag: "ተስፋ" },
-            // ... (Previous logic maintained) ...
             { title: "የእግዚአብሔር ቃል", body: "ሰው ከእግዚአብሔር አፍ በሚወጣ ቃል ሁሉ እንጂ በእንጀራ ብቻ አይኖርም።", author: "መዝሙር", tag: "ቃል" },
             { title: "ይቅርታ", body: "ይቅር ማለት ለራስ ሰላም መስጠት ነው። ክርስቶስ ይቅር እንዳለን ይቅር እንበል።", author: "እህት ቤተል", tag: "ምህረት" }
         ];
