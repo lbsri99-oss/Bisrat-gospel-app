@@ -37,7 +37,7 @@
 
         /* --- 3. COMPONENTS --- */
         
-        /* OFFLINE BANNER (NEW) */
+        /* OFFLINE BANNER */
         #offline-banner {
             display: none;
             position: fixed; top: 70px; left: 0; width: 100%;
@@ -73,7 +73,7 @@
             overflow: hidden;
         }
         
-        /* HERO CARD (Updated with Image) */
+        /* HERO CARD */
         .hero-card {
             position: relative;
             color: white;
@@ -82,16 +82,15 @@
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            background-color: #4f46e5; /* Fallback Color */
+            background-color: #4f46e5;
         }
         
-        /* Background Image for Hero */
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             object-fit: cover;
             z-index: 0;
             filter: brightness(0.6);
-            background-color: #666; /* Placeholder */
+            background-color: #666;
         }
         
         .hero-content { position: relative; z-index: 1; }
@@ -111,21 +110,12 @@
         .share-btn { background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; border: none; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 
         /* REVIVAL CARD STYLE */
-        .revival-card {
-            padding: 0; /* Remove padding for full image */
-        }
+        .revival-card { padding: 0; }
         .revival-img-container {
-            width: 100%;
-            height: 180px;
-            position: relative;
-            background-color: #ddd; /* Placeholder */
+            width: 100%; height: 180px; position: relative; background-color: #ddd;
         }
-        .revival-img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
-        .revival-content {
-            padding: 20px;
-        }
+        .revival-img { width: 100%; height: 100%; object-fit: cover; }
+        .revival-content { padding: 20px; }
         .revival-badge {
             position: absolute; top: 15px; left: 15px;
             background: #ef4444; color: white;
@@ -182,8 +172,6 @@
         .hidden { display: none !important; }
         .section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px 10px 20px; }
         .section-title { font-size: 18px; font-weight: 800; color: #1f2937; }
-        
-        /* New Image Helper */
         .banner-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; background: #ddd; }
     </style>
 </head>
@@ -206,7 +194,6 @@
             
             <div class="card hero-card">
                 <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop" class="hero-bg" alt="Worship Background">
-                
                 <div class="hero-content">
                     <span class="tag-pill">የዕለቱ ቃል</span>
                     <h2 id="verseText" class="verse-text">ጥቅሱ በመጫን ላይ...</h2>
@@ -226,13 +213,11 @@
                 <div class="revival-img-container">
                     <span class="revival-badge">1907 - ኮሪያ</span>
                     <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070&auto=format&fit=crop" class="revival-img" alt="Revival Crowd">
-
                 </div>
                 <div class="revival-content">
                     <h4 class="feed-title" style="font-size: 18px;">የፒዮንግያንግ ታላቁ መነቃቃት</h4>
                     <p class="feed-body" style="color: #4b5563;">
                         በ1907 ዓ.ም በሰሜን ኮሪያ (ፒዮንግያንግ) የተነሳው መንፈሳዊ እንቅስቃሴ እስያ ያለችበትን መንፈሳዊ ቁመና ቀየረው። 
-                        ሁሉም ነገር የጀመረው በአንድ የጠዋት ጸሎት ላይ ጉባኤው በንስሃ ሲወድቅ ነው። ሰዎች "አቤቱ እኔን አድሰኝ" እያሉ በየመንገዱ አለቀሱ።
                         <br><br>
                         <i class="fas fa-fire" style="color:orange;"></i> <b>ትምህርት፡</b> መነቃቃት የሚጀምረው ከአንድ ሰው ንስሃ ነው። ዛሬ ያ ሰው አንተ ነህ?
                     </p>
@@ -289,117 +274,34 @@
                     <h3 class="section-title">ዓለምን የቀየሩ ታላላቅ መነቃቃቶች</h3>
                     <span class="feed-tag" style="background:#e0e7ff; color:#4338ca;">ታሪክ</span>
                 </div>
-                <p style="padding: 0 20px; margin-bottom: 15px; font-size: 13px; color: #6b7280;">
-                    ወንጌል ወደ አንድ ህዝብ ሲገባ የሚያመጣውን ታላቅ ለውጥ የሚያሳዩ 10 አስደናቂ ታሪኮች፡
-                </p>
-
+                
                 <div class="card" style="border-left: 4px solid #ec4899;">
                     <h4 class="feed-title" style="color:#be185d;">1. የዌልስ መነቃቃት (1904)</h4>
                     <p class="feed-body" style="margin-top: 8px;">
-                        <strong>መሪ፡</strong> ኢቫን ሮበርትስ (Evan Roberts)<br>
-                        ይህ መነቃቃት የጀመረው አንድ ወጣት "አቤቱ እኔን ስበረኝ (Bend me)" ብሎ በጸለየው ጸሎት ነው። የመንፈስ ቅዱስ እሳት በዌልስ ምድር ሲቀጣጠል፣ በ6 ወራት ውስጥ ከ100,000 በላይ ሰዎች ወደ ጌታ መጡ። 
-                        <br><br>
-                        <strong>ለውጡ፡</strong> የአገሪቱ ሁኔታ ሙሉ በሙሉ ተቀየረ። መጠጥ ቤቶች ወደ ጸሎት ቤትነት ተቀየሩ፣ ወንጀል ጠፋ፣ ፖሊሶች የሚሰሩት አጥተው ነጭ ጓንት ለብሰው ዝማሬ ያዳምጡ ነበር። በከሰል ማውጫ ውስጥ የሚሰሩ ሰዎች ጸያፍ መሳደብ ስላቆሙ፣ ፈረሶቹ ትዕዛዝ መስማት እስኪያቅታቸው ድረስ ባህሪ ተቀየረ።
+                        ኢቫን ሮበርትስ "አቤቱ እኔን ስበረኝ" ብሎ በጸለየው ጸሎት የተነሳ፣ ዌልስ ሙሉ ለሙሉ ተቀየረች። መጠጥ ቤቶች ወደ ጸሎት ቤትነት ተቀየሩ።
                     </p>
                 </div>
 
                 <div class="card" style="border-left: 4px solid #f59e0b;">
-                    <h4 class="feed-title" style="color:#b45309;">2. የአዙሳ ስትሪት መነቃቃት (1906)</h4>
+                    <h4 class="feed-title" style="color:#b45309;">2. የአዙሳ ስትሪት (1906)</h4>
                     <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ቦታ፡</strong> ሎስ አንጀለስ፣ አሜሪካ<br>
-                        አንድ ዓይኑ የጠፋ ጥቁር አገልጋይ ዊሊያም ሲሞር፣ በፈረስ ማቆሚያ ጋጣ ውስጥ የጀመረው ይህ እንቅስቃሴ የዘመናዊው ጴንጤቆስጤ እንቅስቃሴ መጀመሪያ ነው። ሰዎች ቀንና ሌሊት በመንፈስ ቅዱስ እየተሞሉ በልሳን ይናገሩ ነበር።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> በዘረኝነት የተከፋፈለችው አሜሪካ፣ ነጭና ጥቁር አብረው ሲያመልኩ ለመጀመሪያ ጊዜ ታየች። "ደም የለቀቀው መስመር በመንፈስ ቅዱስ ታጠበ" ተባለ። ዛሬ በዓለም ላይ ላለው የመንፈስ ቅዱስ እንቅስቃሴ ዋና መሠረት ሆነ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #8b5cf6;">
-                    <h4 class="feed-title" style="color:#6d28d9;">3. የሞራቪያን የጸሎት ሰንሰለት (1727)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>መሪ፡</strong> ካውንት ዚንዘንዶርፍ<br>
-                        በጀርመን አገር የተሰደዱ ክርስቲያኖች በመካከላቸው የነበረውን ጠብ ትተው ንስሃ ሲገቡ መንፈስ ቅዱስ ወረደ። ከዚያም "የማይቋረጥ ጸሎት" ጀመሩ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ይህ የጸሎት ሰንሰለት ለ100 ዓመታት ያህል ለሰከንድ እንኳን አልተቋረጠም! ከዚህ የጸሎት ኃይል የተነሳ የመጀመሪያዎቹ ዘመናዊ ሚሽነሪዎች (ወንጌላውያን) ዓለምን ወረሩ። አንዳንዶቹ ለባሮች ወንጌልን ለመስበክ ራሳቸውን እስከመሸጥ ደረሱ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #10b981;">
-                    <h4 class="feed-title" style="color:#047857;">4. የሄብሪዲስ ደሴቶች መነቃቃት (1949)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ቦታ፡</strong> ስኮትላንድ<br>
-                        ሁለት አረጋውያን እህቶች (ፔጊ እና ክርስቲን) ስለ አገራቸው ኃጢአት በማልቀስ "አቤቱ ካልባረክህ አልለቅህም" ብለው ጸለዩ። እግዚአብሔር ሰማይን ቀደደ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ሰዎች በመንገድ ላይ እየሄዱ፣ ቡና ቤት ውስጥ ተቀምጠው ሳሉ የእግዚአብሔር መገኘት ይመታቸውና በንስሃ ይወድቁ ነበር። ማንም ሳይሰብክ መንፈስ ቅዱስ ቤቶችን እያንኳኳ ሰዎችን ወደ ጸሎት ቤት አመጣ። መላው ደሴት ወደ ክርስቶስ ተመለሰ።
+                       የዘመናዊው ጴንጤቆስጤ እንቅስቃሴ መጀመሪያ። ዊሊያም ሲሞር በተባለ ጥቁር አገልጋይ አማካኝነት ዓለም በመንፈስ ቅዱስ እሳት ተያያዘ።
                     </p>
                 </div>
 
                 <div class="card" style="border-left: 4px solid #ef4444;">
-                    <h4 class="feed-title" style="color:#b91c1c;">5. የኢትዮጵያ ወንጌል መነቃቃት (1960ዎቹ-70ዎቹ)</h4>
+                    <h4 class="feed-title" style="color:#b91c1c;">3. የኢትዮጵያ ወንጌል መነቃቃት</h4>
                     <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ታሪክ፡</strong> በዩኒቨርሲቲ ተማሪዎች የተጀመረው ይህ እንቅስቃሴ፣ ኮሙኒዝም (ደርግ) ሲመጣ ይበልጥ ተቀጣጠለ። "ለማመን እንጂ ለመካድ አልተጠራንም" ያሉ ወጣቶች ለእስርና ለሞት ተላልፈው ተሰጡ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ቤተክርስቲያን በስደት ውስጥ ሆና በድብቅ (Underground) ስትሰበሰብ ቁጥሯ በከፍተኛ ሁኔታ ጨመረ። ያኔ የተዘሩት የሰማዕታት ደም ዛሬ ላለው የኢትዮጵያ ወንጌል እንቅስቃሴ መሠረት ሆነ። ተፈራ መኮንንና ሌሎችም ወጣቶች የከፈሉት ዋጋ ዛሬም ይናገራል።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #3b82f6;">
-                    <h4 class="feed-title" style="color:#1d4ed8;">6. የኢንዶኔዢያ መነቃቃት (1965)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ቦታ፡</strong> ቲሞር ደሴት<br>
-                        በኮሙኒስት መፈንቅለ መንግስት ወቅት፣ በሺዎች የሚቆጠሩ ሰዎች ወደ ክርስቶስ ሮጡ። እንደ ሐዋርያት ሥራ ዘመን ውሃ ወደ ወይን ጠጅ ተቀየረ፣ ሙታን ተነሱ፣ ሰዎች በውሃ ላይ ተራመዱ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> አንድ "ወንጌልን የማናውቅ አረማውያን ነን" ያሉ መንደር ሰዎች በሙሉ በአንድ ቀን ጌታን ተቀበሉ። ተራው ህዝብ ወንጌላዊ ሆነ። ወደ 200 የሚጠጉ የወንጌል ቡድኖች ተደራጅተው አገሪቱን አዳረሱ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #6366f1;">
-                    <h4 class="feed-title" style="color:#4338ca;">7. ታላቁ የአሜሪካ መነቃቃት (1730ዎቹ)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>መሪዎች፡</strong> ጆናታን ኤድዋርድስ እና ጆርጅ ዊትፊልድ<br>
-                        "ኃጢአተኞች በቁጣ አምላክ እጅ" (Sinners in the Hands of an Angry God) የሚለው ስብከት ሲሰበክ ሰዎች ሲኦል እንዳይውጣቸው የቤተክርስቲያኑን ምሰሶ አቅፈው ይጮሁ ነበር።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ይህ መነቃቃት የአሜሪካን ህብረተሰብ ሞራል ቀረጸ። ብዙ ዩኒቨርሲቲዎች (ፕሪንስተን፣ ብራውን) የተመሰረቱት አገልጋዮችን ለማሰልጠን በዚህ ጊዜ ነበር።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #14b8a6;">
-                    <h4 class="feed-title" style="color:#0f766e;">8. የናጋላንድ መነቃቃት (ሕንድ)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ታሪክ፡</strong> በፊት የሰውን ራስ በመቁረጥ የሚታወቁ ጨካኝ ጎሳዎች ነበሩ። ወንጌል ወደ እነርሱ ሲገባ ግን ታሪክ ተቀየረ። አሁን ናጋላንድ "ክርስቶስ ብቻ የሚሰበክባት ምድር" ተብላ ትታወቃለች።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ዛሬ ከ95% በላይ የሚሆነው የናጋላንድ ህዝብ ክርስቲያን ነው። እያንዳንዱ መንደር የጸሎት ቤት አለው። ወጣቶቻቸው "አለምን ለክርስቶስ" በሚል መሪ ቃል ሚሽነሪ ሆነው ይወጣሉ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #f97316;">
-                    <h4 class="feed-title" style="color:#c2410c;">9. የአልሞሎንጋ ተአምር (ጓቲማላ)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ታሪክ፡</strong> ይህ ከተማ በፊት በጣዖት አምልኮ፣ በስካርና በድህነት የተሞላ ነበር። 4 እስር ቤቶች ነበሩት። ወንጌል ከገባ በኋላ ግን እስር ቤቶቹ ተዘግተው የሰርግ አዳራሽ ሆኑ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ምድሪቱ ተፈወሰች! በፊት ትንሽ ካሮት ብቻ ይበቅል የነበረበት መሬት፣ አሁን የክንድ ያህል ውፍረት ያለው አትክልት ያበቅላል። ከተማዋ "የአሜሪካ የአትክልት ስፍራ" ተብላ ተሰየመች። የእግዚአብሔር ቃል ምድርንም ይፈውሳል (2ኛ ዜና 7:14)።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #374151;">
-                    <h4 class="feed-title" style="color:#111827;">10. የተሃድሶ እንቅስቃሴ (1517)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>መሪ፡</strong> ማርቲን ሉተር<br>
-                        መጽሐፍ ቅዱስ በካህናት እጅ ብቻ ተዘግቶ በነበረበት ዘመን፣ ሉተር "ጻድቅ በእምነት ይኖራል" ብሎ ተነሳ። መጽሐፍ ቅዱስን ወደ ህዝብ ቋንቋ ተረጎመ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> አውሮፓ ከጨለማ ዘመን ወጣች። እውነት ነጻ ያወጣል። ዛሬ ላለንበት የወንጌል ብርሃንና ነጻነት ዋናው በር የተከፈተው በዚህ ታላቅ እንቅስቃሴ ነው።
+                        በስደትና በመከራ ውስጥ ያለፈችው ቤተክርስቲያን፣ ደም እየከፈለች እዚህ ደርሳለች። ዛሬ ተረካቢው ትውልድ አንተ ነህ።
                     </p>
                 </div>
             </div>
-            </div>
+        </div>
 
         <div id="tab-register" class="page-container">
             <div class="card">
-                <div style="position:absolute; top:0; right:0; opacity:0.05; pointer-events:none;">
-                    <i class="fas fa-cross" style="font-size: 150px;"></i>
-                </div>
-
                 <h2 class="section-title" style="text-align: center; margin-bottom: 5px;">የአገልጋይነት ምዝገባ</h2>
-                <p style="text-align: center; color: #9ca3af; font-size: 12px; margin-bottom: 20px;">አብረን እንስራ፣ መንግስቱን እናስፋ</p>
+                <p style="text-align: center; color: #9ca3af; font-size: 12px; margin-bottom: 20px;">ኢንተርኔት ያስፈልጋል</p>
                 
                 <form id="regForm">
                     <div class="input-group">
@@ -467,7 +369,7 @@
     </nav>
 
     <script>
-        // --- Offline / Online Handler ---
+        // --- 1. Offline / Online Handler ---
         function updateStatus() {
             const banner = document.getElementById('offline-banner');
             if (navigator.onLine) {
@@ -478,9 +380,8 @@
         }
         window.addEventListener('online', updateStatus);
         window.addEventListener('offline', updateStatus);
-        updateStatus(); // Initial check
-
-        // --- Navigation Logic ---
+        
+        // --- 2. Navigation Logic ---
         function switchTab(tabId) {
             document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('btn-' + tabId).classList.add('active');
@@ -490,42 +391,42 @@
             window.scrollTo(0, 0);
         }
 
-        // --- Admin Logic ---
+        // --- 3. Admin Logic ---
         function checkAdminPassword() {
             if(document.getElementById('adminPassword').value === '9876') {
                 document.getElementById('adminLogin').classList.add('hidden');
                 document.getElementById('adminData').classList.remove('hidden');
+                
+                // Only load if function exists (meaning firebase loaded)
                 if(window.loadAdminDataFirebase) {
-                    if(navigator.onLine) {
-                        window.loadAdminDataFirebase();
-                    } else {
-                        alert("ኢንተርኔት የለም። ዳታ ማምጣት አልተቻለም።");
-                    }
+                    window.loadAdminDataFirebase();
+                } else {
+                    alert("ኢንተርኔት የለም ወይም እየተጫነ ነው። (Offline Mode)");
                 }
             } else {
                 alert("Incorrect PIN");
             }
         }
 
-        // --- Data & Content ---
+        // --- 4. Data Content (Offline Data) ---
         const contentDatabase = [
             { title: "የወንጌል አደራ", body: "ወንጌልን አለመስበክ በሰው ላይ ከመፍረድ ይቆጠራል። ዛሬ ለአንድ ሰው ስለ ኢየሱስ እንናገር።", author: "ወንድም ቢኒያም", tag: "አደራ" },
             { title: "የጸሎት ኃይል", body: "ጉልበታችን የሚበረታው በጉልበታችን ስንሆን ነው። ጸሎት ቁልፍ ነው።", author: "እህት ሣራ", tag: "ጸሎት" },
             { title: "ፍቅር ያሸንፋል", body: "ፍቅር ታጋሽ ነው፥ ፍቅር ቸር ነው። በጥላቻ ዓለም ውስጥ የክርስቶስን ፍቅር እናሳይ።", author: "ፓስተር ዳዊት", tag: "ፍቅር" },
             { title: "መንፈስ ቅዱስ", body: "ያለ መንፈስ ቅዱስ እርዳታ ክርስቲያናዊ ህይወት መኖር አይቻልም።", author: "ወንድም ዮናስ", tag: "መንፈስ" },
-            { title: "ተስፋ አትቁረጥ", body: "እግዚአብሔር በጊዜው ውብ አድርጎ ይሰራዋል። ታገስ።", author: "የዕለቱ መልዕክት", tag: "ተስፋ" },
-            { title: "የእግዚአብሔር ቃል", body: "ሰው ከእግዚአብሔር አፍ በሚወጣ ቃል ሁሉ እንጂ በእንጀራ ብቻ አይኖርም።", author: "መዝሙር", tag: "ቃል" },
-            { title: "ይቅርታ", body: "ይቅር ማለት ለራስ ሰላም መስጠት ነው። ክርስቶስ ይቅር እንዳለን ይቅር እንበል።", author: "እህት ቤተል", tag: "ምህረት" }
+            { title: "ተስፋ አትቁረጥ", body: "እግዚአብሔር በጊዜው ውብ አድርጎ ይሰራዋል። ታገስ።", author: "የዕለቱ መልዕክት", tag: "ተስፋ" }
         ];
 
         const verses = [
             { t: "በእርሱ የሚያምን ሁሉ የዘላለም ሕይወት እንዲኖረው እንጂ እንዳይጠፋ እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና።", r: "ዮሐንስ 3:16" },
             { t: "እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም። በለመለመ መስክ ያሳድረኛል፤ በዕረፍት ውሃ ዘንድ ይመራኛል።", r: "መዝሙር 23:1-2" },
-            { t: "ብርታቴና ዝማሬዬ እግዚአብሔር ነው፤ እርሱም መድኃኒት ሆነልኝ።", r: "መዝሙር 118:14" },
-            { t: "የእግዚአብሔር ቃል ለእግሬ መብራት ለመንገዴም ብርሃን ነው።", r: "መዝሙር 119:105" }
+            { t: "ብርታቴና ዝማሬዬ እግዚአብሔር ነው፥ እርሱም መድኃኒት ሆነልኝ።", r: "መዝሙር 118:14" }
         ];
 
+        // --- 5. INITIALIZATION ---
         window.onload = function() {
+            updateStatus();
+            
             // Load Verse
             const vIdx = new Date().getDate() % verses.length;
             document.getElementById('verseText').innerText = `"${verses[vIdx].t}"`;
@@ -538,7 +439,8 @@
             
             let html = '';
             indices.forEach(idx => {
-                const post = contentDatabase[idx] || contentDatabase[0];
+                const safeIdx = Math.abs(idx); // Prevent negative index
+                const post = contentDatabase[safeIdx] || contentDatabase[0];
                 html += `
                     <div class="card feed-item">
                         <div style="display:flex; justify-content:space-between;">
@@ -557,17 +459,17 @@
             feedContainer.innerHTML = html;
         };
 
-        // Fallback Registration (If firebase fails)
+        // Fallback Registration (Shows when offline)
         window.handleRegistration = function() {
-            alert("ዳታቤዝ እየተገናኘ ነው... እባክዎ ትንሽ ይጠብቁ ወይም ኢንተርኔትዎን ያረጋግጡ");
+            if(!navigator.onLine) {
+                alert("ለጊዜው ኢንተርኔት የለም (Offline)። እባክዎ ኢንተርኔት ሲኖር ይሞክሩ።");
+            } else {
+                alert("ዳታቤዝ እየተጫነ ነው... ትንሽ ይጠብቁ።");
+            }
         };
     </script>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
-        // If execution reaches here, Firebase loaded successfully
         const firebaseConfig = {
           apiKey: "AIzaSyAC_PXjxU24c7yf8thr0eZyNFI06peTQ5g",
           authDomain: "bsri-gospel-app.firebaseapp.com",
@@ -576,59 +478,79 @@
           messagingSenderId: "145666666795",
           appId: "1:145666666795:web:67b6e75fc7fe7dc97bd56e"
         };
-        
-        try {
-            const app = initializeApp(firebaseConfig);
-            const db = getFirestore(app);
 
-            // Override the registration function with real Firebase one
-            window.handleRegistration = async () => {
-                const name = document.getElementById('fullName').value;
-                const phone = document.getElementById('phone').value;
-                const role = document.getElementById('role').value;
-                
-                if(!name || !phone || !role) return alert("እባክዎ መረጃውን ያሟሉ");
-                
-                if(!navigator.onLine) return alert("እባክዎ ኢንተርኔትዎን ያብሩ (No Connection)");
-
-                const btn = document.querySelector('.btn-primary');
-                const oldText = btn.innerHTML;
-                btn.innerHTML = 'Loading...';
-                
-                try {
-                    await addDoc(collection(db, 'registrations'), { name, phone, role, createdAt: serverTimestamp() });
-                    alert("ምዝገባዎ ተሳክቷል! እንኳን ደህና መጡ።");
-                    document.getElementById('regForm').reset();
-                    switchTab('home');
-                } catch(e) { 
-                    alert("Network Error. Please try again."); 
-                    console.error(e);
-                } finally {
-                    btn.innerHTML = oldText;
+        // Async function to load Firebase safely
+        async function initFirebaseSafe() {
+            try {
+                // If offline, don't even try to fetch (saves error time)
+                if (!navigator.onLine) {
+                    console.log("App started in Offline Mode");
+                    return; 
                 }
-            };
 
-            // Attach Admin Loader
-            window.loadAdminDataFirebase = () => {
-                 onSnapshot(query(collection(db, 'registrations'), orderBy('createdAt', 'desc')), (snap) => {
-                    document.getElementById('totalCount').innerText = snap.size;
-                    const list = document.getElementById('adminList');
-                    list.innerHTML = '';
-                    snap.docs.forEach(doc => {
-                        const d = doc.data();
-                        list.innerHTML += `
-                            <div class="card" style="padding: 15px; display:flex; justify-content:space-between; align-items:center;">
-                                <div><h4 style="font-weight:bold; font-size:14px;">${d.name}</h4><p style="font-size:12px; color:#666;">${d.phone}</p></div>
-                                <span class="feed-tag">${d.role}</span>
-                            </div>`;
+                // Dynamic Imports
+                const { initializeApp } = await import("https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js");
+                const { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp, orderBy } = await import("https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js");
+
+                const app = initializeApp(firebaseConfig);
+                const db = getFirestore(app);
+
+                console.log("Firebase Connected Successfully");
+
+                // Override the Registration Function with the Real One
+                window.handleRegistration = async () => {
+                    const name = document.getElementById('fullName').value;
+                    const phone = document.getElementById('phone').value;
+                    const role = document.getElementById('role').value;
+                    
+                    if(!name || !phone || !role) return alert("እባክዎ መረጃውን ያሟሉ");
+                    
+                    const btn = document.querySelector('.btn-primary');
+                    const oldText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> በመጫን ላይ...';
+                    
+                    try {
+                        await addDoc(collection(db, 'registrations'), { name, phone, role, createdAt: serverTimestamp() });
+                        alert("ምዝገባዎ ተሳክቷል! እንኳን ደህና መጡ።");
+                        document.getElementById('regForm').reset();
+                        window.switchTab('home'); // Go to home
+                    } catch(e) { 
+                        alert("Error: " + e.message); 
+                    } finally {
+                        btn.innerHTML = oldText;
+                    }
+                };
+
+                // Override Admin Loader
+                window.loadAdminDataFirebase = () => {
+                     onSnapshot(query(collection(db, 'registrations'), orderBy('createdAt', 'desc')), (snap) => {
+                        const totalEl = document.getElementById('totalCount');
+                        const list = document.getElementById('adminList');
+                        
+                        if(totalEl) totalEl.innerText = snap.size;
+                        if(list) {
+                            list.innerHTML = '';
+                            snap.docs.forEach(doc => {
+                                const d = doc.data();
+                                list.innerHTML += `
+                                    <div class="card" style="padding: 15px; display:flex; justify-content:space-between; align-items:center;">
+                                        <div><h4 style="font-weight:bold; font-size:14px;">${d.name}</h4><p style="font-size:12px; color:#666;">${d.phone}</p></div>
+                                        <span class="feed-tag">${d.role}</span>
+                                    </div>`;
+                            });
+                        }
+                    }, (error) => {
+                        console.log("Firebase Error:", error);
                     });
-                }, (error) => {
-                    console.log("Firebase Error (Offline?):", error);
-                });
-            };
-        } catch (err) {
-            console.error("Firebase init failed (likely offline):", err);
+                };
+
+            } catch (err) {
+                console.warn("Firebase failed to load (likely offline). App continues working.", err);
+            }
         }
+
+        // Run the safer init
+        initFirebaseSafe();
     </script>
 </body>
 </html>
