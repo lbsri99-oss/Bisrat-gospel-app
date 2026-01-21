@@ -1,592 +1,530 @@
-
 <!DOCTYPE html>
 <html lang="am">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>ወንጌል ለእኔ - Premium</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* --- 1. GENERAL RESET & FONTS --- */
+        /* --- 1. VARIABLES & THEME --- */
+        :root {
+            --primary: #4f46e5;
+            --primary-light: #e0e7ff;
+            --secondary: #ec4899;
+            --bg-body: #f3f4f6;
+            --bg-card: #ffffff;
+            --text-main: #111827;
+            --text-muted: #6b7280;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --nav-height: 80px;
+            --header-height: 70px;
+            --safe-area-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* --- 2. RESET & BASE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f0f2f5;
-            color: #1c1e21;
+            background-color: var(--bg-body);
+            color: var(--text-main);
             height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- 3. LAYOUT & ANIMATIONS --- */
+        main {
+            flex: 1;
+            position: relative;
             overflow: hidden;
         }
 
-        /* --- 2. LAYOUT UTILITIES --- */
         .page-container {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            padding-top: 80px; /* Header Space */
-            padding-bottom: 100px; /* Nav Space */
+            padding: calc(var(--header-height) + 10px) 20px calc(var(--nav-height) + 20px) 20px;
             overflow-y: auto;
-            opacity: 0; visibility: hidden;
-            transition: opacity 0.3s ease;
-            background: #f0f2f5;
+            opacity: 0; 
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: var(--bg-body);
+            -webkit-overflow-scrolling: touch;
         }
-        .page-active { opacity: 1; visibility: visible; z-index: 5; }
-        
-        /* Hide Scrollbar */
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
 
-        /* --- 3. COMPONENTS --- */
-        
-        /* HEADER (TOP) */
+        .page-active { 
+            opacity: 1; 
+            visibility: visible; 
+            transform: translateY(0); 
+            z-index: 10; 
+        }
+
+        /* Scrollbar Hiding */
+        .page-container::-webkit-scrollbar { width: 0px; background: transparent; }
+
+        /* --- 4. COMPONENTS --- */
+
+        /* Header */
         .app-header {
             position: fixed; top: 0; left: 0; width: 100%;
-            height: 70px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            height: var(--header-height);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 20px;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 50;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-        .brand-text h1 { font-size: 20px; font-weight: 900; color: #333; }
-        .brand-text span { color: #6366f1; }
-        .brand-sub { font-size: 10px; font-weight: bold; color: #6366f1; letter-spacing: 1px; text-transform: uppercase; }
-        .icon-btn { width: 40px; height: 40px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #555; }
+        .brand h1 { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+        .brand span { color: var(--primary); }
+        .brand small { display: block; font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* CARDS */
+        /* Cards */
         .card {
-            background: white;
-            border-radius: 20px;
+            background: var(--bg-card);
+            border-radius: var(--radius-md);
             padding: 20px;
-            margin: 0 20px 20px 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
             position: relative;
             overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.5);
         }
-        
-        /* HERO CARD (Updated with Image) */
+
+        /* Hero Card */
         .hero-card {
-            position: relative;
+            min-height: 220px;
+            display: flex; flex-direction: column; justify-content: flex-end;
             color: white;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
-            min-height: 200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
+            box-shadow: 0 20px 25px -5px rgba(79, 70, 229, 0.3);
+            border: none;
+            border-radius: var(--radius-lg);
         }
-        
-        /* Background Image for Hero */
         .hero-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            filter: brightness(0.6);
+            object-fit: cover; z-index: 0;
+            filter: brightness(0.55);
+            transition: transform 10s ease;
         }
-        
         .hero-content { position: relative; z-index: 1; }
-
-        .tag-pill {
-            background: rgba(255,255,255,0.25);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-            backdrop-filter: blur(5px);
-        }
-        .verse-text { font-size: 18px; line-height: 1.5; font-weight: 500; margin-bottom: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
-        .verse-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 10px; }
-        .share-btn { background: rgba(255,255,255,0.2); width: 32px; height: 32px; border-radius: 50%; border: none; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-
-        /* REVIVAL CARD STYLE */
-        .revival-card {
-            padding: 0; /* Remove padding for full image */
-        }
-        .revival-img-container {
-            width: 100%;
-            height: 180px;
-            position: relative;
-        }
-        .revival-img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
-        .revival-content {
-            padding: 20px;
-        }
-        .revival-badge {
-            position: absolute; top: 15px; left: 15px;
-            background: #ef4444; color: white;
-            padding: 5px 10px; border-radius: 8px;
-            font-size: 10px; font-weight: bold; text-transform: uppercase;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        .pill { 
+            background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); 
+            padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 700;
+            display: inline-block; margin-bottom: 12px;
         }
 
-        /* FEED ITEMS */
-        .feed-item { border-left: 4px solid #6366f1; }
-        .feed-tag { color: #6366f1; background: #eef2ff; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
-        .feed-title { font-size: 16px; font-weight: bold; margin: 8px 0 4px 0; color: #1f2937; }
-        .feed-body { font-size: 13px; color: #6b7280; line-height: 1.5; margin-bottom: 12px; }
-        .feed-author { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #9ca3af; font-weight: bold; }
-        .avatar-circle { width: 24px; height: 24px; background: #e5e7eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #6b7280; font-size: 10px; }
+        /* Feed Items */
+        .feed-item {
+            border-left: 4px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        .feed-item:active { transform: scale(0.98); }
+        .feed-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; color: var(--text-muted); }
+        .feed-tag { color: var(--primary); font-weight: bold; background: var(--primary-light); padding: 2px 8px; border-radius: 6px; }
 
-        /* FORMS */
-        .input-group { margin-bottom: 15px; }
-        .input-label { display: block; font-size: 12px; font-weight: bold; color: #6b7280; margin-bottom: 5px; margin-left: 5px; }
-        .modern-input { width: 100%; background: #f9fafb; border: 1px solid #f3f4f6; padding: 14px; border-radius: 12px; font-size: 14px; outline: none; transition: all 0.2s; }
-        .modern-input:focus { border-color: #6366f1; background: white; }
-        .btn-primary { width: 100%; background: #111827; color: white; border: none; padding: 16px; border-radius: 14px; font-weight: bold; font-size: 14px; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer; }
+        /* Buttons & Inputs */
+        .btn {
+            width: 100%; padding: 16px; border-radius: var(--radius-md);
+            border: none; font-weight: 700; font-size: 15px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: all 0.2s;
+        }
+        .btn-primary { background: var(--text-main); color: white; }
+        .btn-primary:active { transform: scale(0.97); opacity: 0.9; }
         
-        /* ADMIN LOGIN */
-        .admin-screen { display: flex; flex-col; align-items: center; justify-content: center; height: 60vh; text-align: center; }
-        .pin-input { font-size: 24px; letter-spacing: 5px; text-align: center; width: 150px; border: none; border-bottom: 2px solid #ddd; background: transparent; padding: 10px; outline: none; }
-        .pin-input:focus { border-color: #6366f1; }
+        .input-group { margin-bottom: 16px; }
+        .form-input {
+            width: 100%; padding: 16px; background: var(--bg-body);
+            border: 2px solid transparent; border-radius: var(--radius-md);
+            font-size: 15px; outline: none; transition: 0.2s;
+        }
+        .form-input:focus { border-color: var(--primary); background: white; }
 
-        /* NAVIGATION (BOTTOM) */
+        /* Navigation */
         .nav-bar {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 400px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-radius: 30px;
-            padding: 10px 20px;
+            height: 65px;
             display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            z-index: 1000;
+            padding: 0 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            z-index: 100;
+            border: 1px solid rgba(255,255,255,0.4);
         }
         .nav-btn {
             background: transparent; border: none; color: #9ca3af;
-            width: 45px; height: 45px; border-radius: 50%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            font-size: 18px; transition: all 0.3s ease; cursor: pointer;
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .nav-btn.active {
-            background: white; color: #6366f1;
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+            background: var(--text-main); color: white;
             transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
-        /* UTILS */
+        /* Typography & Utilities */
+        h2, h3, h4 { color: var(--text-main); margin-bottom: 8px; }
+        p { line-height: 1.6; color: var(--text-muted); font-size: 14px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin: 25px 0 15px 0; }
+        .section-title { font-size: 18px; font-weight: 800; margin: 0; }
+        .text-gradient { background: linear-gradient(135deg, #4f46e5, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hidden { display: none !important; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px 10px 20px; }
-        .section-title { font-size: 18px; font-weight: 800; color: #1f2937; }
         
-        /* New Image Helper */
-        .banner-img { width: 100%; height: 120px; object-fit: cover; border-radius: 15px; margin-bottom: 15px; }
+        /* Loading Skeleton */
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.5s infinite; color: transparent !important; border-radius: 4px; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body>
 
     <header class="app-header">
-        <div class="brand-text">
-            <p class="brand-sub">እንኳን ደህና መጡ</p>
+        <div class="brand">
+            <small>እንኳን ደህና መጡ</small>
             <h1>ወንጌል<span>ለእኔ</span></h1>
         </div>
-        <div class="icon-btn">
-            <i class="fas fa-bell"></i>
+        <div style="width: 40px; height: 40px; background: #f3f4f6; border-radius: 50%; display: grid; place-items: center;">
+            <i class="fas fa-bell" style="color: #666;"></i>
         </div>
     </header>
 
     <main>
-        <div id="tab-home" class="page-container page-active">
+        <article id="tab-home" class="page-container page-active">
             
-            <div class="card hero-card">
-                <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=2073&auto=format&fit=crop" class="hero-bg" alt="Worship Background">
-                
+            <section class="card hero-card">
+                <img src="https://images.unsplash.com/photo-1438232992991-995b7058bbb3?q=80&w=800&auto=format&fit=crop" class="hero-bg" loading="lazy" alt="Worship">
                 <div class="hero-content">
-                    <span class="tag-pill">የዕለቱ ቃል</span>
-                    <h2 id="verseText" class="verse-text">ጥቅሱ በመጫን ላይ...</h2>
-                    <div class="verse-footer">
-                        <span id="verseRef" style="font-weight: bold; font-size: 14px;">...</span>
-                        <button class="share-btn"><i class="fas fa-share"></i></button>
+                    <span class="pill">የዕለቱ ቃል</span>
+                    <h2 id="verseText" class="skeleton" style="min-height: 60px; font-size: 18px; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">እየተጫነ ነው...</h2>
+                    <div style="border-top: 1px solid rgba(255,255,255,0.3); margin-top: 10px; padding-top: 10px; display: flex; justify-content: space-between;">
+                        <span id="verseRef" style="font-weight: 700;">...</span>
+                        <i class="fas fa-share-alt"></i>
                     </div>
                 </div>
-            </div>
+            </section>
 
             <div class="section-header">
                 <h3 class="section-title">ታሪካዊ መነቃቃት</h3>
-                <span class="feed-tag" style="background:#fee2e2; color:#ef4444;">ተነሳ!</span>
+                <span class="feed-tag" style="background: #fee2e2; color: #ef4444;">ተነሳ!</span>
             </div>
 
-            <div class="card revival-card">
-                <div class="revival-img-container">
-                    <span class="revival-badge">1907 - ኮሪያ</span>
-                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=2070&auto=format&fit=crop" class="revival-img" alt="Revival Crowd">
-
+            <section class="card" style="padding: 0;">
+                <div style="position: relative; height: 160px;">
+                    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?q=80&w=800&auto=format&fit=crop" style="width:100%; height:100%; object-fit: cover;" loading="lazy" alt="Revival">
+                    <span class="pill" style="position:absolute; top:10px; left:10px; background: #dc2626; color: white;">1907 - ኮሪያ</span>
                 </div>
-                <div class="revival-content">
-                    <h4 class="feed-title" style="font-size: 18px;">የፒዮንግያንግ ታላቁ መነቃቃት</h4>
-                    <p class="feed-body" style="color: #4b5563;">
-                        በ1907 ዓ.ም በሰሜን ኮሪያ (ፒዮንግያንግ) የተነሳው መንፈሳዊ እንቅስቃሴ እስያ ያለችበትን መንፈሳዊ ቁመና ቀየረው። 
-                        ሁሉም ነገር የጀመረው በአንድ የጠዋት ጸሎት ላይ ጉባኤው በንስሃ ሲወድቅ ነው። ሰዎች "አቤቱ እኔን አድሰኝ" እያሉ በየመንገዱ አለቀሱ።
-                        <br><br>
-                        <i class="fas fa-fire" style="color:orange;"></i> <b>ትምህርት፡</b> መነቃቃት የሚጀምረው ከአንድ ሰው ንስሃ ነው። ዛሬ ያ ሰው አንተ ነህ?
-                    </p>
+                <div style="padding: 20px;">
+                    <h4 style="font-weight: 800;">የፒዮንግያንግ ታላቁ መነቃቃት</h4>
+                    <p>በ1907 ዓ.ም በሰሜን ኮሪያ (ፒዮንግያንግ) የተነሳው መንፈሳዊ እንቅስቃሴ እስያ ያለችበትን መንፈሳዊ ቁመና ቀየረው።</p>
+                </div>
+            </section>
+
+            <div class="section-header">
+                <h3 class="section-title">የኃይል ምንጭ</h3>
+                <small style="color: var(--primary); font-weight: bold;">የዛሬ መልዕክቶች</small>
+            </div>
+            <div id="feedList"></div>
+            <div style="height: 50px;"></div> </article>
+
+        <article id="tab-training" class="page-container">
+            <h2 class="section-title" style="font-size: 24px;">የስልጠና ማዕከል</h2>
+            <p style="margin-bottom: 20px;">ለአገልግሎት እና ለመንፈሳዊ እድገት የሚሆኑ ግብዓቶች</p>
+
+            <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?q=80&w=800&auto=format&fit=crop" style="width:100%; height: 140px; object-fit: cover; border-radius: var(--radius-md); margin-bottom: 20px;" loading="lazy" alt="Bible Study">
+
+            <div style="display: grid; grid-template-columns: 1fr; gap: 15px;">
+                <div class="card" style="display: flex; gap: 15px; align-items: center; margin: 0;">
+                    <div style="min-width: 50px; height: 50px; background: #ffedd5; border-radius: 12px; display: grid; place-items: center; color: #f97316; font-size: 20px;">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin:0; font-size: 16px;">የወንጌል እሳት</h4>
+                        <p style="margin:0; font-size: 12px;">እንዴት በወንጌል መቃጠል እንችላለን?</p>
+                    </div>
+                </div>
+                <div class="card" style="display: flex; gap: 15px; align-items: center; margin: 0;">
+                    <div style="min-width: 50px; height: 50px; background: #dbeafe; border-radius: 12px; display: grid; place-items: center; color: #3b82f6; font-size: 20px;">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div>
+                        <h4 style="margin:0; font-size: 16px;">ደቀመዝሙርነት</h4>
+                        <p style="margin:0; font-size: 12px;">ሰዎችን ወደ ክርስቶስ መምራት</p>
+                    </div>
                 </div>
             </div>
 
             <div class="section-header">
-                <h3 class="section-title">የኃይል ምንጭ</h3>
-                <span class="feed-tag">የዛሬ መልዕክት</span>
+                <h3 class="section-title">ታላላቅ መነቃቃቶች</h3>
+            </div>
+            <div id="historyList">
+                </div>
+            <div style="height: 50px;"></div>
+        </article>
+
+        <article id="tab-register" class="page-container">
+            <div class="card" style="text-align: center; padding: 40px 20px; border: 1px solid var(--primary-light);">
+                <div style="width: 80px; height: 80px; background: var(--primary-light); color: var(--primary); border-radius: 50%; display: grid; place-items: center; margin: 0 auto 20px auto; font-size: 30px;">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <h2 style="font-size: 22px; font-weight: 800;">የአገልጋይነት ምዝገባ</h2>
+                <p>አብረን እንስራ፣ መንግስቱን እናስፋ</p>
             </div>
 
-            <div id="feedList" style="padding-bottom: 80px;"></div>
-        </div>
+            <form id="regForm" class="card">
+                <div class="input-group">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 13px;">ሙሉ ስም</label>
+                    <input id="fullName" type="text" class="form-input" placeholder="ስምዎን ያስገቡ" required>
+                </div>
+                <div class="input-group">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 13px;">ስልክ ቁጥር</label>
+                    <input id="phone" type="tel" class="form-input" placeholder="09..." required>
+                </div>
+                <div class="input-group">
+                    <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 13px;">የአገልግሎት ዘርፍ</label>
+                    <select id="role" class="form-input" required>
+                        <option value="">ይምረጡ...</option>
+                        <option value="Evangelist">ወንጌላዊ</option>
+                        <option value="Coordinator">አስተባባሪ</option>
+                        <option value="Prayer Warrior">የጸሎት ወታደር</option>
+                        <option value="Choir">መዘምራን</option>
+                    </select>
+                </div>
+                <button type="submit" id="submitBtn" class="btn btn-primary">
+                    <span>ይመዝገቡ</span> <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+        </article>
 
-        <div id="tab-training" class="page-container">
-            <div class="section-header"><h2 class="section-title">የስልጠና ማዕከል</h2></div>
-            
-            <div style="padding: 0 20px;">
-                <img src="https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?q=80&w=1000&auto=format&fit=crop" class="banner-img" alt="Bible Study">
-            </div>
-
-            <div class="card" style="display: flex; gap: 15px; align-items: center;">
-                <div style="width: 50px; height: 50px; background: #ffedd5; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #f97316; font-size: 20px;">
-                    <i class="fas fa-fire"></i>
+        <article id="tab-admin" class="page-container">
+            <div id="adminLogin" style="text-align: center; margin-top: 50px;">
+                <div style="width: 70px; height: 70px; background: white; border-radius: 20px; box-shadow: var(--shadow-lg); display: grid; place-items: center; margin: 0 auto 20px auto;">
+                    <i class="fas fa-lock" style="font-size: 24px; color: var(--text-main);"></i>
                 </div>
-                <div>
-                    <h4 class="feed-title" style="margin: 0;">የወንጌል እሳት</h4>
-                    <p class="feed-body" style="margin: 4px 0;">እንዴት በወንጌል መቃጠል እንችላለን?</p>
+                <h3>Admin Access</h3>
+                <p style="margin-bottom: 20px;">Please enter your PIN</p>
+                <div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;">
+                    <input id="adminPin" type="password" maxlength="4" style="width: 120px; letter-spacing: 10px; text-align: center; font-size: 24px; border: none; background: white; padding: 10px; border-radius: 10px; box-shadow: var(--shadow-sm);" placeholder="••••">
                 </div>
-            </div>
-
-            <div class="card" style="display: flex; gap: 15px; align-items: center;">
-                <div style="width: 50px; height: 50px; background: #dbeafe; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #3b82f6; font-size: 20px;">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div>
-                    <h4 class="feed-title" style="margin: 0;">ደቀመዝሙርነት</h4>
-                    <p class="feed-body" style="margin: 4px 0;">ሰዎችን ወደ ክርስቶስ መምራት</p>
-                </div>
-            </div>
-            
-             <div class="card" style="display: flex; gap: 15px; align-items: center;">
-                <div style="width: 50px; height: 50px; background: #d1fae5; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #059669; font-size: 20px;">
-                    <i class="fas fa-book-open"></i>
-                </div>
-                <div>
-                    <h4 class="feed-title" style="margin: 0;">የመጽሐፍ ቅዱስ ጥናት</h4>
-                    <p class="feed-body" style="margin: 4px 0;">ቃሉን በጥልቀት መረዳት</p>
-                </div>
-            </div>
-
-            <div style="margin-top: 40px; margin-bottom: 20px;">
-                <div class="section-header">
-                    <h3 class="section-title">ዓለምን የቀየሩ ታላላቅ መነቃቃቶች</h3>
-                    <span class="feed-tag" style="background:#e0e7ff; color:#4338ca;">ታሪክ</span>
-                </div>
-                <p style="padding: 0 20px; margin-bottom: 15px; font-size: 13px; color: #6b7280;">
-                    ወንጌል ወደ አንድ ህዝብ ሲገባ የሚያመጣውን ታላቅ ለውጥ የሚያሳዩ 10 አስደናቂ ታሪኮች፡
-                </p>
-
-                <div class="card" style="border-left: 4px solid #ec4899;">
-                    <h4 class="feed-title" style="color:#be185d;">1. የዌልስ መነቃቃት (1904)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>መሪ፡</strong> ኢቫን ሮበርትስ (Evan Roberts)<br>
-                        ይህ መነቃቃት የጀመረው አንድ ወጣት "አቤቱ እኔን ስበረኝ (Bend me)" ብሎ በጸለየው ጸሎት ነው። የመንፈስ ቅዱስ እሳት በዌልስ ምድር ሲቀጣጠል፣ በ6 ወራት ውስጥ ከ100,000 በላይ ሰዎች ወደ ጌታ መጡ። 
-                        <br><br>
-                        <strong>ለውጡ፡</strong> የአገሪቱ ሁኔታ ሙሉ በሙሉ ተቀየረ። መጠጥ ቤቶች ወደ ጸሎት ቤትነት ተቀየሩ፣ ወንጀል ጠፋ፣ ፖሊሶች የሚሰሩት አጥተው ነጭ ጓንት ለብሰው ዝማሬ ያዳምጡ ነበር። በከሰል ማውጫ ውስጥ የሚሰሩ ሰዎች ጸያፍ መሳደብ ስላቆሙ፣ ፈረሶቹ ትዕዛዝ መስማት እስኪያቅታቸው ድረስ ባህሪ ተቀየረ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #f59e0b;">
-                    <h4 class="feed-title" style="color:#b45309;">2. የአዙሳ ስትሪት መነቃቃት (1906)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ቦታ፡</strong> ሎስ አንጀለስ፣ አሜሪካ<br>
-                        አንድ ዓይኑ የጠፋ ጥቁር አገልጋይ ዊሊያም ሲሞር፣ በፈረስ ማቆሚያ ጋጣ ውስጥ የጀመረው ይህ እንቅስቃሴ የዘመናዊው ጴንጤቆስጤ እንቅስቃሴ መጀመሪያ ነው። ሰዎች ቀንና ሌሊት በመንፈስ ቅዱስ እየተሞሉ በልሳን ይናገሩ ነበር።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> በዘረኝነት የተከፋፈለችው አሜሪካ፣ ነጭና ጥቁር አብረው ሲያመልኩ ለመጀመሪያ ጊዜ ታየች። "ደም የለቀቀው መስመር በመንፈስ ቅዱስ ታጠበ" ተባለ። ዛሬ በዓለም ላይ ላለው የመንፈስ ቅዱስ እንቅስቃሴ ዋና መሠረት ሆነ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #8b5cf6;">
-                    <h4 class="feed-title" style="color:#6d28d9;">3. የሞራቪያን የጸሎት ሰንሰለት (1727)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>መሪ፡</strong> ካውንት ዚንዘንዶርፍ<br>
-                        በጀርመን አገር የተሰደዱ ክርስቲያኖች በመካከላቸው የነበረውን ጠብ ትተው ንስሃ ሲገቡ መንፈስ ቅዱስ ወረደ። ከዚያም "የማይቋረጥ ጸሎት" ጀመሩ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ይህ የጸሎት ሰንሰለት ለ100 ዓመታት ያህል ለሰከንድ እንኳን አልተቋረጠም! ከዚህ የጸሎት ኃይል የተነሳ የመጀመሪያዎቹ ዘመናዊ ሚሽነሪዎች (ወንጌላውያን) ዓለምን ወረሩ። አንዳንዶቹ ለባሮች ወንጌልን ለመስበክ ራሳቸውን እስከመሸጥ ደረሱ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #10b981;">
-                    <h4 class="feed-title" style="color:#047857;">4. የሄብሪዲስ ደሴቶች መነቃቃት (1949)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ቦታ፡</strong> ስኮትላንድ<br>
-                        ሁለት አረጋውያን እህቶች (ፔጊ እና ክርስቲን) ስለ አገራቸው ኃጢአት በማልቀስ "አቤቱ ካልባረክህ አልለቅህም" ብለው ጸለዩ። እግዚአብሔር ሰማይን ቀደደ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ሰዎች በመንገድ ላይ እየሄዱ፣ ቡና ቤት ውስጥ ተቀምጠው ሳሉ የእግዚአብሔር መገኘት ይመታቸውና በንስሃ ይወድቁ ነበር። ማንም ሳይሰብክ መንፈስ ቅዱስ ቤቶችን እያንኳኳ ሰዎችን ወደ ጸሎት ቤት አመጣ። መላው ደሴት ወደ ክርስቶስ ተመለሰ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #ef4444;">
-                    <h4 class="feed-title" style="color:#b91c1c;">5. የኢትዮጵያ ወንጌል መነቃቃት (1960ዎቹ-70ዎቹ)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ታሪክ፡</strong> በዩኒቨርሲቲ ተማሪዎች የተጀመረው ይህ እንቅስቃሴ፣ ኮሙኒዝም (ደርግ) ሲመጣ ይበልጥ ተቀጣጠለ። "ለማመን እንጂ ለመካድ አልተጠራንም" ያሉ ወጣቶች ለእስርና ለሞት ተላልፈው ተሰጡ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ቤተክርስቲያን በስደት ውስጥ ሆና በድብቅ (Underground) ስትሰበሰብ ቁጥሯ በከፍተኛ ሁኔታ ጨመረ። ያኔ የተዘሩት የሰማዕታት ደም ዛሬ ላለው የኢትዮጵያ ወንጌል እንቅስቃሴ መሠረት ሆነ። ተፈራ መኮንንና ሌሎችም ወጣቶች የከፈሉት ዋጋ ዛሬም ይናገራል።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #3b82f6;">
-                    <h4 class="feed-title" style="color:#1d4ed8;">6. የኢንዶኔዢያ መነቃቃት (1965)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ቦታ፡</strong> ቲሞር ደሴት<br>
-                        በኮሙኒስት መፈንቅለ መንግስት ወቅት፣ በሺዎች የሚቆጠሩ ሰዎች ወደ ክርስቶስ ሮጡ። እንደ ሐዋርያት ሥራ ዘመን ውሃ ወደ ወይን ጠጅ ተቀየረ፣ ሙታን ተነሱ፣ ሰዎች በውሃ ላይ ተራመዱ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> አንድ "ወንጌልን የማናውቅ አረማውያን ነን" ያሉ መንደር ሰዎች በሙሉ በአንድ ቀን ጌታን ተቀበሉ። ተራው ህዝብ ወንጌላዊ ሆነ። ወደ 200 የሚጠጉ የወንጌል ቡድኖች ተደራጅተው አገሪቱን አዳረሱ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #6366f1;">
-                    <h4 class="feed-title" style="color:#4338ca;">7. ታላቁ የአሜሪካ መነቃቃት (1730ዎቹ)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>መሪዎች፡</strong> ጆናታን ኤድዋርድስ እና ጆርጅ ዊትፊልድ<br>
-                        "ኃጢአተኞች በቁጣ አምላክ እጅ" (Sinners in the Hands of an Angry God) የሚለው ስብከት ሲሰበክ ሰዎች ሲኦል እንዳይውጣቸው የቤተክርስቲያኑን ምሰሶ አቅፈው ይጮሁ ነበር።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ይህ መነቃቃት የአሜሪካን ህብረተሰብ ሞራል ቀረጸ። ብዙ ዩኒቨርሲቲዎች (ፕሪንስተን፣ ብራውን) የተመሰረቱት አገልጋዮችን ለማሰልጠን በዚህ ጊዜ ነበር።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #14b8a6;">
-                    <h4 class="feed-title" style="color:#0f766e;">8. የናጋላንድ መነቃቃት (ሕንድ)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ታሪክ፡</strong> በፊት የሰውን ራስ በመቁረጥ የሚታወቁ ጨካኝ ጎሳዎች ነበሩ። ወንጌል ወደ እነርሱ ሲገባ ግን ታሪክ ተቀየረ። አሁን ናጋላንድ "ክርስቶስ ብቻ የሚሰበክባት ምድር" ተብላ ትታወቃለች።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ዛሬ ከ95% በላይ የሚሆነው የናጋላንድ ህዝብ ክርስቲያን ነው። እያንዳንዱ መንደር የጸሎት ቤት አለው። ወጣቶቻቸው "አለምን ለክርስቶስ" በሚል መሪ ቃል ሚሽነሪ ሆነው ይወጣሉ።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #f97316;">
-                    <h4 class="feed-title" style="color:#c2410c;">9. የአልሞሎንጋ ተአምር (ጓቲማላ)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>ታሪክ፡</strong> ይህ ከተማ በፊት በጣዖት አምልኮ፣ በስካርና በድህነት የተሞላ ነበር። 4 እስር ቤቶች ነበሩት። ወንጌል ከገባ በኋላ ግን እስር ቤቶቹ ተዘግተው የሰርግ አዳራሽ ሆኑ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> ምድሪቱ ተፈወሰች! በፊት ትንሽ ካሮት ብቻ ይበቅል የነበረበት መሬት፣ አሁን የክንድ ያህል ውፍረት ያለው አትክልት ያበቅላል። ከተማዋ "የአሜሪካ የአትክልት ስፍራ" ተብላ ተሰየመች። የእግዚአብሔር ቃል ምድርንም ይፈውሳል (2ኛ ዜና 7:14)።
-                    </p>
-                </div>
-
-                <div class="card" style="border-left: 4px solid #374151;">
-                    <h4 class="feed-title" style="color:#111827;">10. የተሃድሶ እንቅስቃሴ (1517)</h4>
-                    <p class="feed-body" style="margin-top: 8px;">
-                        <strong>መሪ፡</strong> ማርቲን ሉተር<br>
-                        መጽሐፍ ቅዱስ በካህናት እጅ ብቻ ተዘግቶ በነበረበት ዘመን፣ ሉተር "ጻድቅ በእምነት ይኖራል" ብሎ ተነሳ። መጽሐፍ ቅዱስን ወደ ህዝብ ቋንቋ ተረጎመ።
-                        <br><br>
-                        <strong>ለውጡ፡</strong> አውሮፓ ከጨለማ ዘመን ወጣች። እውነት ነጻ ያወጣል። ዛሬ ላለንበት የወንጌል ብርሃንና ነጻነት ዋናው በር የተከፈተው በዚህ ታላቅ እንቅስቃሴ ነው።
-                    </p>
-                </div>
-            </div>
-            </div>
-
-        <div id="tab-register" class="page-container">
-            <div class="card">
-                <div style="position:absolute; top:0; right:0; opacity:0.05; pointer-events:none;">
-                    <i class="fas fa-cross" style="font-size: 150px;"></i>
-                </div>
-
-                <h2 class="section-title" style="text-align: center; margin-bottom: 5px;">የአገልጋይነት ምዝገባ</h2>
-                <p style="text-align: center; color: #9ca3af; font-size: 12px; margin-bottom: 20px;">አብረን እንስራ፣ መንግስቱን እናስፋ</p>
-                
-                <form id="regForm">
-                    <div class="input-group">
-                        <label class="input-label">ሙሉ ስም</label>
-                        <input id="fullName" type="text" class="modern-input" placeholder="ስምዎን ያስገቡ">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">ስልክ ቁጥር</label>
-                        <input id="phone" type="tel" class="modern-input" placeholder="09...">
-                    </div>
-                    <div class="input-group">
-                        <label class="input-label">የአገልግሎት ዘርፍ</label>
-                        <select id="role" class="modern-input">
-                            <option value="">ይምረጡ...</option>
-                            <option>ወንጌላዊ</option>
-                            <option>አስተባባሪ</option>
-                            <option>የጸሎት ወታደር</option>
-                            <option>መዘምራን</option>
-                        </select>
-                    </div>
-                    <button type="button" onclick="handleRegistration()" class="btn-primary">
-                        ይመዝገቡ <i class="fas fa-arrow-right"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <div id="tab-admin" class="page-container">
-            <div id="adminLogin" class="admin-screen">
-                <div style="width: 60px; height: 60px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <i class="fas fa-fingerprint" style="font-size: 24px; color: #374151;"></i>
-                </div>
-                <h2 style="font-size: 20px; margin-bottom: 5px;">Admin Access</h2>
-                <input id="adminPassword" type="password" maxlength="4" class="pin-input" placeholder="****">
-                <button onclick="checkAdminPassword()" style="margin-top: 20px; padding: 10px 30px; background: #4f46e5; color: white; border: none; border-radius: 20px; font-weight: bold;">Unlock</button>
+                <button id="unlockBtn" class="btn btn-primary" style="width: auto; margin: 0 auto; padding: 12px 30px;">Unlock</button>
             </div>
 
             <div id="adminData" class="hidden">
-                <div class="card" style="background: #111827; color: white; position: relative; overflow: hidden;">
-                    <img src="https://images.unsplash.com/photo-1504052434569-70ad5836ab65?q=80&w=1000&auto=format&fit=crop" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: 0.2;" alt="">
-                    <div style="position: relative; z-index: 2;">
-                        <p style="font-size: 10px; color: #9ca3af; text-transform: uppercase; letter-spacing: 2px;">Total Users</p>
-                        <h1 id="totalCount" style="font-size: 48px; font-weight: 900;">0</h1>
+                <div class="card" style="background: #1f2937; color: white;">
+                    <p style="text-transform: uppercase; font-size: 11px; letter-spacing: 2px; opacity: 0.7;">Total Registered</p>
+                    <h1 id="totalCount" style="font-size: 42px; margin: 5px 0 0 0; color: white;">...</h1>
+                    <div style="position: absolute; right: 20px; top: 20px; opacity: 0.2;">
+                        <i class="fas fa-users" style="font-size: 50px;"></i>
                     </div>
                 </div>
-                <div class="section-header"><h3 class="section-title">የቅርብ ተመዝጋቢዎች</h3></div>
+
+                <div class="section-header">
+                    <h3 class="section-title">Recent Users</h3>
+                    <button id="refreshAdmin" style="background:none; border:none; color:var(--primary); font-weight:bold;">Refresh</button>
+                </div>
                 <div id="adminList"></div>
             </div>
-        </div>
+            <div style="height: 50px;"></div>
+        </article>
     </main>
 
     <nav class="nav-bar">
-        <button onclick="switchTab('home')" id="btn-home" class="nav-btn active">
-            <i class="fas fa-home"></i>
-        </button>
-        <button onclick="switchTab('training')" id="btn-training" class="nav-btn">
-            <i class="fas fa-compass"></i>
-        </button>
-        <button onclick="switchTab('register')" id="btn-register" class="nav-btn">
-            <i class="fas fa-plus-circle"></i>
-        </button>
-        <button onclick="switchTab('admin')" id="btn-admin" class="nav-btn">
-            <i class="fas fa-cog"></i>
-        </button>
+        <button data-target="home" class="nav-btn active" aria-label="Home"><i class="fas fa-home"></i></button>
+        <button data-target="training" class="nav-btn" aria-label="Training"><i class="fas fa-book-open"></i></button>
+        <button data-target="register" class="nav-btn" aria-label="Register"><i class="fas fa-plus"></i></button>
+        <button data-target="admin" class="nav-btn" aria-label="Admin"><i class="fas fa-cog"></i></button>
     </nav>
-
-    <script>
-        // --- Navigation Logic ---
-        function switchTab(tabId) {
-            // Update Buttons
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById('btn-' + tabId).classList.add('active');
-
-            // Update Pages
-            document.querySelectorAll('.page-container').forEach(page => page.classList.remove('page-active'));
-            document.getElementById('tab-' + tabId).classList.add('page-active');
-            window.scrollTo(0, 0);
-        }
-
-        // --- Admin Logic ---
-        function checkAdminPassword() {
-            if(document.getElementById('adminPassword').value === '9876') {
-                document.getElementById('adminLogin').classList.add('hidden');
-                document.getElementById('adminData').classList.remove('hidden');
-                if(window.loadAdminDataFirebase) window.loadAdminDataFirebase();
-            } else {
-                alert("Incorrect PIN");
-            }
-        }
-
-        // --- Data & Content ---
-        const contentDatabase = [
-            { title: "የወንጌል አደራ", body: "ወንጌልን አለመስበክ በሰው ላይ ከመፍረድ ይቆጠራል። ዛሬ ለአንድ ሰው ስለ ኢየሱስ እንናገር።", author: "ወንድም ቢኒያም", tag: "አደራ" },
-            { title: "የጸሎት ኃይል", body: "ጉልበታችን የሚበረታው በጉልበታችን ስንሆን ነው። ጸሎት ቁልፍ ነው።", author: "እህት ሣራ", tag: "ጸሎት" },
-            { title: "ፍቅር ያሸንፋል", body: "ፍቅር ታጋሽ ነው፥ ፍቅር ቸር ነው። በጥላቻ ዓለም ውስጥ የክርስቶስን ፍቅር እናሳይ።", author: "ፓስተር ዳዊት", tag: "ፍቅር" },
-            { title: "መንፈስ ቅዱስ", body: "ያለ መንፈስ ቅዱስ እርዳታ ክርስቲያናዊ ህይወት መኖር አይቻልም።", author: "ወንድም ዮናስ", tag: "መንፈስ" },
-            { title: "ተስፋ አትቁረጥ", body: "እግዚአብሔር በጊዜው ውብ አድርጎ ይሰራዋል። ታገስ።", author: "የዕለቱ መልዕክት", tag: "ተስፋ" },
-            { title: "የእግዚአብሔር ቃል", body: "ሰው ከእግዚአብሔር አፍ በሚወጣ ቃል ሁሉ እንጂ በእንጀራ ብቻ አይኖርም።", author: "መዝሙር", tag: "ቃል" },
-            { title: "ይቅርታ", body: "ይቅር ማለት ለራስ ሰላም መስጠት ነው። ክርስቶስ ይቅር እንዳለን ይቅር እንበል።", author: "እህት ቤተል", tag: "ምህረት" }
-        ];
-
-        const verses = [
-            { t: "በእርሱ የሚያምን ሁሉ የዘላለም ሕይወት እንዲኖረው እንጂ እንዳይጠፋ እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና።", r: "ዮሐንስ 3:16" },
-            { t: "እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም። በለመለመ መስክ ያሳድረኛል፤ በዕረፍት ውሃ ዘንድ ይመራኛል።", r: "መዝሙር 23:1-2" },
-            { t: "ብርታቴና ዝማሬዬ እግዚአብሔር ነው፤ እርሱም መድኃኒት ሆነልኝ።", r: "መዝሙር 118:14" },
-            { t: "የእግዚአብሔር ቃል ለእግሬ መብራት ለመንገዴም ብርሃን ነው።", r: "መዝሙር 119:105" }
-        ];
-
-        window.onload = function() {
-            // Load Verse
-            const vIdx = new Date().getDate() % verses.length;
-            document.getElementById('verseText').innerText = `"${verses[vIdx].t}"`;
-            document.getElementById('verseRef').innerText = verses[vIdx].r;
-
-            // Load Feed
-            const feedContainer = document.getElementById('feedList');
-            const today = new Date().getDate();
-            const indices = [(today-1)%contentDatabase.length, (today+5)%contentDatabase.length, (today+15)%contentDatabase.length];
-            
-            let html = '';
-            indices.forEach(idx => {
-                const post = contentDatabase[idx] || contentDatabase[0];
-                html += `
-                    <div class="card feed-item">
-                        <div style="display:flex; justify-content:space-between;">
-                            <span class="feed-tag">${post.tag}</span>
-                            <i class="fas fa-ellipsis-h" style="color:#d1d5db;"></i>
-                        </div>
-                        <h3 class="feed-title">${post.title}</h3>
-                        <p class="feed-body">${post.body}</p>
-                        <div class="feed-author">
-                            <div class="avatar-circle">${post.author.charAt(0)}</div>
-                            <span>${post.author}</span>
-                        </div>
-                    </div>
-                `;
-            });
-            feedContainer.innerHTML = html;
-        };
-
-        // Fallback Registration (If firebase fails)
-        window.handleRegistration = function() {
-            alert("ዳታቤዝ እየተገናኘ ነው... እባክዎ ትንሽ ይጠብቁ");
-        };
-    </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, serverTimestamp, orderBy } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
+        // --- Configuration ---
         const firebaseConfig = {
-          apiKey: "AIzaSyAC_PXjxU24c7yf8thr0eZyNFI06peTQ5g",
-          authDomain: "bsri-gospel-app.firebaseapp.com",
-          projectId: "bsri-gospel-app",
-          storageBucket: "bsri-gospel-app.firebasestorage.app",
-          messagingSenderId: "145666666795",
-          appId: "1:145666666795:web:67b6e75fc7fe7dc97bd56e"
+            apiKey: "AIzaSyAC_PXjxU24c7yf8thr0eZyNFI06peTQ5g",
+            authDomain: "bsri-gospel-app.firebaseapp.com",
+            projectId: "bsri-gospel-app",
+            storageBucket: "bsri-gospel-app.firebasestorage.app",
+            messagingSenderId: "145666666795",
+            appId: "1:145666666795:web:67b6e75fc7fe7dc97bd56e"
         };
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
 
-        // Override the registration function with real Firebase one
-        window.handleRegistration = async () => {
-            const name = document.getElementById('fullName').value;
-            const phone = document.getElementById('phone').value;
-            const role = document.getElementById('role').value;
-            
-            if(!name || !phone || !role) return alert("እባክዎ መረጃውን ያሟሉ");
-            
-            const btn = document.querySelector('.btn-primary');
-            const oldText = btn.innerHTML;
-            btn.innerHTML = 'Loading...';
-            
-            try {
-                await addDoc(collection(db, 'registrations'), { name, phone, role, createdAt: serverTimestamp() });
-                alert("ምዝገባዎ ተሳክቷል! እንኳን ደህና መጡ።");
-                document.getElementById('regForm').reset();
-                switchTab('home');
-            } catch(e) { 
-                alert("Network Error. Please try again."); 
-            } finally {
-                btn.innerHTML = oldText;
+        // --- State & Data ---
+        const AppState = {
+            db: null,
+            isAdminUnlocked: false,
+            verses: [
+                { t: "በእርሱ የሚያምን ሁሉ የዘላለም ሕይወት እንዲኖረው እንጂ እንዳይጠፋ እግዚአብሔር አንድያ ልጁን እስኪሰጥ ድረስ ዓለሙን እንዲሁ ወዶአልና።", r: "ዮሐንስ 3:16" },
+                { t: "እግዚአብሔር እረኛዬ ነው፥ የሚያሳጣኝም የለም። በለመለመ መስክ ያሳድረኛል፤ በዕረፍት ውሃ ዘንድ ይመራኛል።", r: "መዝሙር 23:1-2" },
+                { t: "ብርታቴና ዝማሬዬ እግዚአብሔር ነው፤ እርሱም መድኃኒት ሆነልኝ።", r: "መዝሙር 118:14" }
+            ],
+            history: [
+                { title: "የዌልስ መነቃቃት (1904)", body: "ኢቫን ሮበርትስ 'እኔን ስበረኝ' ብሎ በጸለየው ጸሎት 100,000 ሰዎች ወደ ጌታ መጡ።", color: "#ec4899" },
+                { title: "የአዙሳ ስትሪት (1906)", body: "ዊሊያም ሲሞር በጀመረው የጸሎት ንቅናቄ ዘመናዊው የጴንጤቆስጤ እንቅስቃሴ ተወለደ።", color: "#f59e0b" },
+                { title: "የኢትዮጵያ መነቃቃት (1960s)", body: "በስደት ውስጥ የበዛች ቤተክርስቲያን። ለወንጌል የተከፈለ ዋጋ።", color: "#10b981" },
+            ]
+        };
+
+        // --- UI Controller ---
+        const UI = {
+            init: () => {
+                UI.renderVerse();
+                UI.renderFeed();
+                UI.renderHistory();
+                UI.setupNavigation();
+                UI.setupForms();
+            },
+
+            renderVerse: () => {
+                const idx = new Date().getDate() % AppState.verses.length;
+                const v = AppState.verses[idx];
+                const textEl = document.getElementById('verseText');
+                
+                // Simulate loading for effect
+                setTimeout(() => {
+                    textEl.classList.remove('skeleton');
+                    textEl.innerText = `"${v.t}"`;
+                    document.getElementById('verseRef').innerText = v.r;
+                }, 500);
+            },
+
+            renderFeed: () => {
+                const list = document.getElementById('feedList');
+                const posts = [
+                    { t: "የወንጌል አደራ", b: "ወንጌልን አለመስበክ በሰው ላይ ከመፍረድ ይቆጠራል።", a: "ቢኒያም" },
+                    { t: "የጸሎት ኃይል", b: "ጉልበታችን የሚበረታው በጉልበታችን ስንሆን ነው።", a: "ሣራ" },
+                    { t: "ፍቅር ያሸንፋል", b: "ፍቅር ታጋሽ ነው፥ ፍቅር ቸር ነው።", a: "ዳዊት" }
+                ];
+                
+                list.innerHTML = posts.map(p => `
+                    <div class="card feed-item">
+                        <div class="feed-meta">
+                            <span class="feed-tag">መልዕክት</span>
+                            <span><i class="fas fa-user-circle"></i> ${p.a}</span>
+                        </div>
+                        <h3 style="font-size:16px;">${p.t}</h3>
+                        <p style="margin:0; font-size:13px;">${p.b}</p>
+                    </div>
+                `).join('');
+            },
+
+            renderHistory: () => {
+                const container = document.getElementById('historyList');
+                container.innerHTML = AppState.history.map(h => `
+                    <div class="card" style="border-left: 4px solid ${h.color};">
+                        <h4 style="color:${h.color}; margin-bottom: 5px;">${h.title}</h4>
+                        <p style="font-size:13px;">${h.body}</p>
+                    </div>
+                `).join('');
+            },
+
+            setupNavigation: () => {
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const targetId = btn.getAttribute('data-target');
+                        
+                        // Update UI Buttons
+                        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        // Update Page Visibility
+                        document.querySelectorAll('.page-container').forEach(p => p.classList.remove('page-active'));
+                        document.getElementById(`tab-${targetId}`).classList.add('page-active');
+                        
+                        // Scroll top
+                        window.scrollTo(0,0);
+                    });
+                });
+            },
+
+            setupForms: () => {
+                // Registration
+                const form = document.getElementById('regForm');
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    if(!AppState.db) return alert("Database initializing...");
+                    
+                    const btn = document.getElementById('submitBtn');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    btn.disabled = true;
+
+                    try {
+                        await addDoc(collection(AppState.db, 'registrations'), {
+                            name: document.getElementById('fullName').value,
+                            phone: document.getElementById('phone').value,
+                            role: document.getElementById('role').value,
+                            createdAt: serverTimestamp()
+                        });
+                        alert("ተመዝግበዋል! እግዚአብሔር ይባርክዎ።");
+                        form.reset();
+                        document.querySelector('[data-target="home"]').click(); // Go home
+                    } catch (err) {
+                        console.error(err);
+                        alert("Error: " + err.message);
+                    } finally {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                    }
+                });
+
+                // Admin Unlock
+                document.getElementById('unlockBtn').addEventListener('click', () => {
+                    const pin = document.getElementById('adminPin').value;
+                    if(pin === '9876') {
+                        document.getElementById('adminLogin').classList.add('hidden');
+                        document.getElementById('adminData').classList.remove('hidden');
+                        UI.loadAdminData();
+                    } else {
+                        alert("Incorrect PIN");
+                        document.getElementById('adminPin').value = '';
+                    }
+                });
+            },
+
+            loadAdminData: () => {
+                if(!AppState.db) return;
+                const q = query(collection(AppState.db, 'registrations'), orderBy('createdAt', 'desc'));
+                
+                onSnapshot(q, (snapshot) => {
+                    document.getElementById('totalCount').innerText = snapshot.size;
+                    const list = document.getElementById('adminList');
+                    
+                    list.innerHTML = snapshot.docs.map(doc => {
+                        const d = doc.data();
+                        return `
+                            <div class="card" style="padding: 15px; display:flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <h4 style="font-size: 14px; margin:0;">${d.name}</h4>
+                                    <small style="color: #6b7280;">${d.phone}</small>
+                                </div>
+                                <span style="font-size:10px; background:#e0e7ff; color:#4338ca; padding:4px 8px; border-radius:4px;">${d.role}</span>
+                            </div>
+                        `;
+                    }).join('');
+                });
             }
         };
 
-        // Attach Admin Loader
-        window.loadAdminDataFirebase = () => {
-             onSnapshot(query(collection(db, 'registrations'), orderBy('createdAt', 'desc')), (snap) => {
-                document.getElementById('totalCount').innerText = snap.size;
-                const list = document.getElementById('adminList');
-                list.innerHTML = '';
-                snap.docs.forEach(doc => {
-                    const d = doc.data();
-                    list.innerHTML += `
-                        <div class="card" style="padding: 15px; display:flex; justify-content:space-between; align-items:center;">
-                            <div><h4 style="font-weight:bold; font-size:14px;">${d.name}</h4><p style="font-size:12px; color:#666;">${d.phone}</p></div>
-                            <span class="feed-tag">${d.role}</span>
-                        </div>`;
-                });
-            });
-        };
+        // --- Main Execution ---
+        try {
+            const app = initializeApp(firebaseConfig);
+            AppState.db = getFirestore(app);
+            UI.init();
+        } catch (e) {
+            console.error("Firebase init failed", e);
+            alert("App failed to connect to database.");
+        }
     </script>
 </body>
 </html>
-
